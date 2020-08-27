@@ -17,7 +17,6 @@ int main(int argc, char** argv)
   for (int i = 0; i<N; ++i){
     f[i] = 100*exp(-10*x[i]);
   }
-  cout << f << endl;
 
   return 0;
 }
