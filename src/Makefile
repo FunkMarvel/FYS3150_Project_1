@@ -2,7 +2,7 @@ CC := g++
 FLAGS := -Wall -O2
 LIBS := -larmadillo
 
-.PHONY: all clean
+.PHONY: all clean run
 
 all: main.exe
 
@@ -15,5 +15,8 @@ main.o: main.cpp
 clean:
     rm -f *.o
     rm -f *.exe
+
+run:
+	./main.exe
 
 print-% : ; @echo $* = $($*)
