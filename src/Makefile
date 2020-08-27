@@ -1,5 +1,5 @@
 CC := g++
-FLAGS := -Wall -O2
+FLAGS := -Wall -O2 -march=native
 LIBS := -larmadillo
 
 .PHONY: all clean run
