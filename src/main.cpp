@@ -7,10 +7,10 @@ using namespace arma;
 
 int main(int argc, char** argv)
 {
-  mat A = randu<mat>(5,5);
-  mat B = randu<mat>(5,5);
+  int N = atoi(argv[1]);
+  vec x = linspace<vec>(0, 1, N);
 
-  cout << A*B << endl;
+  cout << x << N << endl;
 
   return 0;
 }
