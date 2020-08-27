@@ -7,7 +7,7 @@ LIBS := -larmadillo
 all: main.exe
 
 main.exe: main.o
-    $(CC) main.o $(LIBS) -o main.exe
+    $(CC) main.o -o $(LIBS) main.exe
 
 main.o: main.cpp
     $(CC) $(FLAGS) main.cpp -c $(LIBS)
