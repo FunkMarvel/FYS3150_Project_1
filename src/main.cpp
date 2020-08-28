@@ -15,6 +15,7 @@ int main(int argc, char** argv)
   vec a(N-1); a.fill(-1);       // vector for lower diagonal.
   vec b(N); b.fill(2);      // vector for diagonal.
   vec c(N-1); c.fill(-1);       // vector for upper diagonal.
+  vec u(N);     // vector for numerical solution
 
   vec f = zeros<vec>(N);
   for (int i = 0; i<N; ++i){
