@@ -16,6 +16,8 @@ int main(int argc, char** argv)
   vec b(N); b.fill(2);      // vector for diagonal.
   vec c(N-1); c.fill(-1);       // vector for upper diagonal.
   vec u(N);     // vector for numerical solution
+  vec b_twiddle = zeros<vec>(N);
+  vec f_twiddle = zeros<vec>(N);
 
   vec f = zeros<vec>(N);
   for (int i = 0; i<N; ++i){
@@ -24,7 +26,10 @@ int main(int argc, char** argv)
 
   double h = 1.0/(N+1);
 
-  cout << decomp_and_forward_sub(a, b, c, x) << endl; // testing function call.
+  //cout << decomp_and_forward_sub(a, b, c, x) << endl; // testing function call.
+
+  //Forward part call
+  general_forward(a,b,c,f,b_twiddle,f_twiddle,N);
 
   return 0;
 }

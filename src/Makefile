@@ -6,11 +6,14 @@ LIBS := -larmadillo
 
 all: main.exe
 
-main.exe: main.o
-	$(CC) $(FLAGS) main.o -o main.exe $(LIBS)
+main.exe: main.o general_forward.o
+	$(CC) $(FLAGS) main.o general_forward.o -o main.exe $(LIBS)
 
 main.o: main.cpp
 	$(CC) $(FLAGS) main.cpp -c
+
+general_forward.o: general_forward.cpp
+	$(CC) $(FLAGS) general_forward.cpp -c
 
 clean:
 	rm -f *.o

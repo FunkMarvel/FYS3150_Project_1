@@ -8,6 +8,9 @@ using namespace arma;
 
 int decomp_and_forward_sub(vec& a, vec& b, vec& c, vec& u);
 
+//general_forward.cpp:
+
+void general_forward(vec& a, vec& b, vec& c, vec& f, vec& b_twiddle, vec& f_twiddle, int N);
 
 
 #endif
