@@ -13,7 +13,7 @@ void general_forward(vec& a, vec& b, vec& c, vec& f, vec& b_twiddle, vec& f_twid
   f_twiddle[0] = f[0];
 
   //forward loop
-  for (int i = 1;i<=N;++i){
+  for (int i = 1;i<N;++i){
     b_twiddle[i] = b[i] - a[i-1]*c[i-1]/b_twiddle[i-1];
     f_twiddle[i] = f[i] - a[i-1]*f_twiddle[i-1]/b_twiddle[i-1];
   }
@@ -22,10 +22,10 @@ void general_forward(vec& a, vec& b, vec& c, vec& f, vec& b_twiddle, vec& f_twid
 void general_backward(vec& b_twiddle, vec& f_twiddle, vec& c, vec& u,int N)
 {
   //setting first element
-  u[N] = f_twiddle[N]/b_twiddle[N];
+  u[N-1] = f_twiddle[N-1]/b_twiddle[N-1];
 
   //backward loop
-  for (int i = N-1; i>=0;--i){
-    u[i] = (f_twiddle[i] - c[i]*u[i+1])/b_twiddle[i];
+  for (int i = N-1; i>=1;--i){
+    u[i-1] = (f_twiddle[i-1] - c[i-1]*u[i])/b_twiddle[i-1];
   }
 }
