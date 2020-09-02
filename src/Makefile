@@ -6,7 +6,7 @@ LIBS := -larmadillo
 
 all: main.exe
 
-main.exe: main.o general_algorithm.o special_algorithm.o
+main.exe: main.o general_algorithm.o special_algorithm.o relative_error.o
 	$(CC) $(FLAGS) main.o general_algorithm.o special_algorithm.o relative_error.o -o main.exe $(LIBS)
 
 main.o: main.cpp
