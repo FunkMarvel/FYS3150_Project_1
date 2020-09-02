@@ -44,9 +44,16 @@ int main(int argc, char** argv)
 
   // General algorithm finished
   finish = clock();
+
+  // Print time spent
   double general_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
   cout << "General algorithm took " << general_cputime << " seconds to finish."
        << endl;
+
+  // Calculate maximum of log10 of relative error
+  double eps_general = find_relative_error(u,u_anal,N);
+  cout << "Maximum (log10 of) relative error in general algorithm with " << N
+       << " steps: " << eps_general << endl;
 
   return 0;
 }
