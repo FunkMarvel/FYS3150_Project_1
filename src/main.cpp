@@ -2,6 +2,7 @@
 #include <armadillo>
 #include <cmath>
 #include "functions.h"
+#include "time.h"
 
 using namespace std;
 using namespace arma;
@@ -28,6 +29,11 @@ int main(int argc, char** argv)
     u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
   }
 
+  //declaring variables for CPU time measurement
+  clock_t start, finish;
+
+  //start of general algorithm
+  start = clock();
 
   //Forward part call
   general_forward(a, b, c, b_twiddle, N);
@@ -35,6 +41,11 @@ int main(int argc, char** argv)
   //Backward part call
   general_backward(b, b_twiddle, c, u, N);
 
-  cout << max(u-u_anal) << endl;
+  //general algorithm finished
+  finish = clock();
+  double general_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
+  cout << "General algorithm took " << general_cputime << " seconds to finish."
+       << endl;
+
   return 0;
 }
