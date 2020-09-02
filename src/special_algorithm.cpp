@@ -21,6 +21,6 @@ void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N)
 
   //backward loop
   for (int i = N-1; i>=1; --i){
-    u[i-1] = (b_twiddle[i-1] + u[i])/b_recip[i-1];
+    u[i-1] = (b_twiddle[i-1] + u[i])*b_recip[i-1];
   }
 }

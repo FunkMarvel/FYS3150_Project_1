@@ -37,10 +37,20 @@ int main(int argc, char** argv)
 
   cout << max(u-u_anal) << endl;
 
-  vec b_recip = zeros<vec>(N);
-  for (int i = 0; i < N; ++i) {
-    b_recip[i] = i/(i + 1.0);
+  vec b_recip = zeros<vec>(N); // array for 1/b.
+  for (int i = 1; i < N+1; ++i) {
+    b_recip[i-1] = i/(i + 1.0);
   }
+  u.fill(0);
+
+  for (int i = 0; i<N; ++i){
+    b_twiddle[i] = h*h*100*exp(-10*x[i]);
+  }
+
+  special_forward(b_recip, b_twiddle, N);
+  special_backward(b_recip, b_twiddle, u, N);
+
+  cout << max(u-u_anal) << endl;
 
   return 0;
 }
