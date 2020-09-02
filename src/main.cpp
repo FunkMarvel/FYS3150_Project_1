@@ -17,12 +17,10 @@ int main(int argc, char** argv)
   vec c(N-1); c.fill(-1);       // vector for upper diagonal.
   vec u(N);     // vector for numerical solution
   vec b_twiddle = zeros<vec>(N);
-  vec f_twiddle = zeros<vec>(N);
   double h = 1.0/(N+1);
 
-  vec f = zeros<vec>(N);
   for (int i = 0; i<N; ++i){
-    f[i] = h*h*100*exp(-10*x[i]);
+    b_twiddle[i] = h*h*100*exp(-10*x[i]);
   }
 
   vec u_anal = zeros<vec>(N);
@@ -32,11 +30,12 @@ int main(int argc, char** argv)
 
 
   //Forward part call
-  general_forward(a,b,c,f,b_twiddle,f_twiddle,N);
+  general_forward(a, b, c, b_twiddle, N);
 
   //Backward part call
-  general_backward(b_twiddle,f_twiddle,c,u,N);
+  general_backward(b, b_twiddle, c, u, N);
 
   cout << max(u-u_anal) << endl;
+  cout << u << "b\n" << u_anal << endl;
   return 0;
 }
