@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 
   vec f = zeros<vec>(N);
   for (int i = 0; i<N; ++i){
-    f[i] = h*h*100*exp(-10*x[i]);
+    f[i] = h*h*100*exp(-10*x[i]);  // this is b_twiddle in the project text.
   }
 
   vec u_anal = zeros<vec>(N);
