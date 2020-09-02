@@ -31,5 +31,9 @@ int main(int argc, char** argv)
   //Forward part call
   general_forward(a,b,c,f,b_twiddle,f_twiddle,N);
 
+  //Backward part call
+  general_backward(b_twiddle,f_twiddle,c,u,N);
+
+  cout << u << endl;
   return 0;
 }
