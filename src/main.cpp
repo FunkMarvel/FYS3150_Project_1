@@ -17,6 +17,7 @@ int main(int argc, char** argv)
   vec c(N-1); c.fill(-1);           // Vector for upper diagonal.
   vec u(N);                         // Vector for numerical solution
   double h = 1.0/(N+1);             // Step length
+  mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
 
   // Generating values for input function
   vec b_twiddle = zeros<vec>(N);
@@ -36,10 +37,8 @@ int main(int argc, char** argv)
   // Start of general algorithm
   start = clock();
 
-  // Forward part call
+  // General algorithm calls
   general_forward(a, b, c, b_twiddle, N);
-
-  // Backward part call
   general_backward(b, b_twiddle, c, u, N);
 
   // General algorithm finished
@@ -54,6 +53,17 @@ int main(int argc, char** argv)
   double eps_general = find_relative_error(u,u_anal,N);
   cout << "Maximum (log10 of) relative error in general algorithm with " << N
        << " steps: " << eps_general << endl;
+
+  // Generate matrix values to use with LU decomposition
+  A[0,0] = 2;
+  A[0,1] = -1;
+  A[N-1,N-1] = 2;
+  A[N-1,N-2] = -1;
+  for (int i = 1; i<N-1; ++i){
+    A[i,i-1] = -1;
+    A[i,i] = 2;
+    A[i, i+1] = -1;
+  }
 
   return 0;
 }
