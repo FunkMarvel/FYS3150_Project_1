@@ -8,7 +8,6 @@ using namespace arma;
 
 void general_forward(vec& a, vec& b, vec& c, vec& b_twiddle, int N)
 {
-  //setting first elements
   //forward loop
   for (int i = 1; i<N; ++i){
     b[i] = b[i]- a[i-1]*c[i-1]/b[i-1];
