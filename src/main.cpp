@@ -54,18 +54,6 @@ int main(int argc, char** argv)
   cout << "Maximum (log10 of) relative error in general algorithm with " << N
        << " steps: " << eps_general << endl;
 
-  // Generate matrix values to use with LU decomposition
-  A[0,0] = 2;
-  A[0,1] = -1;
-  A[N-1,N-1] = 2;
-  A[N-1,N-2] = -1;
-  for (int i = 1; i<N-1; ++i){
-    A[i,i-1] = -1;
-    A[i,i] = 2;
-    A[i, i+1] = -1;
-  }
-
-  cout << max(u-u_anal) << endl;
 
   vec b_recip = zeros<vec>(N); // array for 1/b.
   for (int i = 1; i < N+1; ++i) {
@@ -77,10 +65,34 @@ int main(int argc, char** argv)
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
   }
 
+  // Start of special algorithm
+  start = clock();
+
   special_forward(b_recip, b_twiddle, N);
   special_backward(b_recip, b_twiddle, u, N);
 
-  cout << max(u-u_anal) << endl;
+  // Special algorithm finished
+  finish = clock();
+
+  // Print time spent
+  double special_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
+  cout << "Special algorithm took " << special_cputime << " seconds to finish."
+       << endl;
+
+  // Calculate maximum of log10 of relative error
+  double eps_special = find_relative_error(u,u_anal,N);
+  cout << "Maximum (log10 of) relative error in special algorithm with " << N
+       << " steps: " << eps_special << endl;
+  // Generate matrix values to use with LU decomposition
+  //A[0,0] = 2;
+  //A[0,1] = -1;
+  //A[N-1,N-1] = 2;
+  //A[N-1,N-2] = -1;
+  //for (int i = 1; i<N-1; ++i){
+  //  A[i,i-1] = -1;
+  //  A[i,i] = 2;
+  //  A[i, i+1] = -1;
+  //}
 
   return 0;
 }
