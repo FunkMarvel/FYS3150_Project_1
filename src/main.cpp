@@ -31,9 +31,6 @@ int main(int argc, char** argv)
   }
 
 
-
-  //cout << decomp_and_forward_sub(a, b, c, x) << endl; // testing function call.
-
   //Forward part call
   general_forward(a,b,c,f,b_twiddle,f_twiddle,N);
 
