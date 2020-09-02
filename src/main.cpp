@@ -18,13 +18,19 @@ int main(int argc, char** argv)
   vec u(N);     // vector for numerical solution
   vec b_twiddle = zeros<vec>(N);
   vec f_twiddle = zeros<vec>(N);
+  double h = 1.0/(N+1);
 
   vec f = zeros<vec>(N);
   for (int i = 0; i<N; ++i){
-    f[i] = 100*exp(-10*x[i]);
+    f[i] = h*h*100*exp(-10*x[i]);
   }
 
-  double h = 1.0/(N+1);
+  vec u_anal = zeros<vec>(N);
+  for (int i=0; i<N; ++i){
+    u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
+  }
+
+
 
   //cout << decomp_and_forward_sub(a, b, c, x) << endl; // testing function call.
 
@@ -34,6 +40,6 @@ int main(int argc, char** argv)
   //Backward part call
   general_backward(b_twiddle,f_twiddle,c,u,N);
 
-  cout << u << endl;
+  cout << max(u-u_anal) << endl;
   return 0;
 }
