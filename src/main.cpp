@@ -38,5 +38,9 @@ int main(int argc, char** argv)
   cout << max(u-u_anal) << endl;
 
   vec b_recip = zeros<vec>(N);
+  for (int i = 0; i < N; ++i) {
+    b_recip[i] = i/(i + 1.0);
+  }
+
   return 0;
 }
