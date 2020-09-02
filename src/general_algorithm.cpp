@@ -8,10 +8,12 @@ using namespace arma;
 
 void general_forward(vec& a, vec& b, vec& c, vec& b_twiddle, int N)
 {
+  double decomp_factor = 0;
   //forward loop
   for (int i = 1; i<N; ++i){
-    b[i] = b[i]- a[i-1]*c[i-1]/b[i-1];
-    b_twiddle[i] = b_twiddle[i]- a[i-1]*b_twiddle[i-1]/b[i-1];
+    decomp_factor = a[i-1]/b[i-1];
+    b[i] = b[i] - c[i-1]*decomp_factor;
+    b_twiddle[i] = b_twiddle[i] - b_twiddle[i-1]*decomp_factor;
   }
 }
 

@@ -36,5 +36,7 @@ int main(int argc, char** argv)
   general_backward(b, b_twiddle, c, u, N);
 
   cout << max(u-u_anal) << endl;
+
+  vec b_recip = zeros<vec>(N);
   return 0;
 }
