@@ -4,10 +4,6 @@
 #include <armadillo>
 using namespace arma;
 
-// decomp_and_subst.cpp:
-
-int decomp_and_forward_sub(vec& a, vec& b, vec& c, vec& u);
-
 //general_algorithm.cpp:
 
 void general_forward(vec& a, vec& b, vec& c, vec& f, vec& b_twiddle, vec& f_twiddle, int N);
