@@ -8,10 +8,10 @@ using namespace std;
 using namespace arma;
 
 void special_main(int N, double h) {
-  vec u = zeros<vec>(N);                         // Vector for numerical solution
-  vec b_twiddle = zeros<vec>(N);
-  vec b_recip = zeros<vec>(N);
-  vec u_anal = zeros<vec>(N);
+  vec u = zeros<vec>(N);          // Vector for numerical solution
+  vec b_twiddle = zeros<vec>(N);  // Vector with known points.
+  vec b_recip = zeros<vec>(N);    // Vector with 1/b.
+  vec u_anal = zeros<vec>(N);     // Vector for analytical solution.
   //mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
 
   // scoping for temporary variables:
