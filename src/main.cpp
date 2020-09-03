@@ -17,7 +17,7 @@ int main(int argc, char** argv)
   vec c(N-1); c.fill(-1);           // Vector for upper diagonal.
   vec u(N);                         // Vector for numerical solution
   double h = 1.0/(N+1);             // Step length
-  mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
+  //mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
 
   // Generating values for input function
   vec b_twiddle = zeros<vec>(N);
