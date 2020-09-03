@@ -7,28 +7,17 @@
 using namespace std;
 using namespace arma;
 
-void general_main(int N, double h)
+void general_main(int N, double h, vec& u_anal, vec& x)
 {
   vec a(N-1); a.fill(-1);           // Vector for lower diagonal.
   vec b(N); b.fill(2);              // Vector for diagonal.
   vec c(N-1); c.fill(-1);           // Vector for upper diagonal.
   vec u(N);                         // Vector for numerical solution
-  vec u_anal = zeros<vec>(N);       // Vector for analytical solution
   vec b_twiddle = zeros<vec>(N);    // Vector for function value (times h^2)
-
-  // Block to deallocate x and h once we are finished using them
-  {
-  vec x = linspace<vec>(0,1,N);     // Vector for x-values.
 
   // Generating values for input function
   for (int i = 0; i<N; ++i){
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
-  }
-
-  // Generating values for analytic solution
-  for (int i=0; i<N; ++i){
-    u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
-  }
   }
 
   // Declaring variables for CPU time measurement

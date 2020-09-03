@@ -7,22 +7,15 @@
 using namespace std;
 using namespace arma;
 
-void LU_main(int N,double h)
+void LU_main(int N, double h, vec& u_anal, vec& x)
 {
   mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
   mat L,U;                          // Matrices to store LU decomposition
-  vec x = linspace<vec>(0,1,N);     // Vector for x-values.
-  vec u_anal = zeros<vec>(N);       // Vector for analytical solution
   vec b_twiddle = zeros<vec>(N);    // Vector for function value (times h^2)
 
   // Generating values for input function
   for (int i = 0; i<N; ++i){
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
-  }
-
-  // Generating values for analytic solution
-  for (int i=0; i<N; ++i){
-    u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
   }
 
   // Generate matrix values to use with LU decomposition

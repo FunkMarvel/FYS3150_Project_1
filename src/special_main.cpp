@@ -7,24 +7,14 @@
 using namespace std;
 using namespace arma;
 
-void special_main(int N, double h) {
+void special_main(int N, double h, vec& u_anal, vec& x) {
   vec u = zeros<vec>(N);          // Vector for numerical solution
   vec b_twiddle = zeros<vec>(N);  // Vector with known points.
   vec b_recip = zeros<vec>(N);    // Vector with 1/b.
-  vec u_anal = zeros<vec>(N);     // Vector for analytical solution.
-  //mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
 
-  // scoping for temporary variables:
-  {
-    // Generating values for input function
-    vec x = linspace<vec>(0,1,N);     // temp Vector for x-values.
-    for (int i = 0; i<N; ++i){
-      b_twiddle[i] = h*h*100*exp(-10*x[i]);
-    }
-    // Generating values for analytic solution
-    for (int i=0; i<N; ++i){
-      u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
-    }
+
+  for (int i = 0; i<N; ++i){
+    b_twiddle[i] = h*h*100*exp(-10*x[i]);
   }
 
   // Calculating 1/b where b is the diagonal elements.
