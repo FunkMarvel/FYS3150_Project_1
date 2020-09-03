@@ -37,34 +37,10 @@ int main(int argc, char** argv)
   // General algorithm call
   general_main(N,h);
 
-  vec b_recip = zeros<vec>(N); // array for 1/b.
-  for (int i = 1; i < N+1; ++i) {
-    b_recip[i-1] = i/(i + 1.0);
-  }
-  u.fill(0);
 
-  for (int i = 0; i<N; ++i){
-    b_twiddle[i] = h*h*100*exp(-10*x[i]);
-  }
+  special_main(N, h); // performing special_algorithm with benchmark.
 
-  // Start of special algorithm
-  start = clock();
 
-  special_forward(b_recip, b_twiddle, N);
-  special_backward(b_recip, b_twiddle, u, N);
-
-  // Special algorithm finished
-  finish = clock();
-
-  // Print time spent
-  double special_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
-  cout << "Special algorithm took " << special_cputime << " seconds to finish."
-       << endl;
-
-  // Calculate maximum of log10 of relative error
-  double eps_special = find_relative_error(u,u_anal,N);
-  cout << "Maximum (log10 of) relative error in special algorithm with " << N
-       << " steps: " << eps_special << endl;
   // Generate matrix values to use with LU decomposition
   //A[0,0] = 2;
   //A[0,1] = -1;
