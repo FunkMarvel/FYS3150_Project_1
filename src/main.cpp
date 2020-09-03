@@ -13,11 +13,11 @@ int main(int argc, char** argv)
   double h = 1.0/(N+1);             // Step length
   //mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
 
-  // General algorithm call
+  // Performing general algorithm with benchmark.
   general_main(N,h);
 
-  // performing special_algorithm with benchmark.
-  special_main(N, h);
+  // Performing special algorithm with benchmark.
+  special_main(N,h);
 
 
   // Generate matrix values to use with LU decomposition
