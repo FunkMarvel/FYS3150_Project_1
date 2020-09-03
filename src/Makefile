@@ -1,13 +1,14 @@
 CC := g++
 FLAGS := -Wall -O2 -march=native
 LIBS := -larmadillo
+OFILES := main.o general_algorithm.o special_algorithm.o relative_error.o general_main.o special_main.o
 
 .PHONY: all clean run
 
 all: main.exe
 
-main.exe: main.o general_algorithm.o special_algorithm.o relative_error.o general_main.o special_main.o
-	$(CC) $(FLAGS) main.o general_algorithm.o special_algorithm.o relative_error.o special_main.o general_main.o -o main.exe $(LIBS)
+main.exe: $(OFILES)
+	$(CC) $(FLAGS) $(OFILES) -o main.exe $(LIBS)
 
 main.o: main.cpp
 	$(CC) $(FLAGS) main.cpp -c
