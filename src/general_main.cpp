@@ -7,7 +7,7 @@
 using namespace std;
 using namespace arma;
 
-void general_main(int N)
+void general_main(int N, double h)
 {
   vec a(N-1); a.fill(-1);           // Vector for lower diagonal.
   vec b(N); b.fill(2);              // Vector for diagonal.
@@ -18,7 +18,6 @@ void general_main(int N)
 
   // Block to deallocate x and h once we are finished using them
   {
-  double h = 1.0/(N+1);             // Step length
   vec x = linspace<vec>(0,1,N);     // Vector for x-values.
 
   // Generating values for input function

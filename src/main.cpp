@@ -35,7 +35,7 @@ int main(int argc, char** argv)
   clock_t start, finish;
 
   // General algorithm call
-  general_main(N);
+  general_main(N,h);
 
   vec b_recip = zeros<vec>(N); // array for 1/b.
   for (int i = 1; i < N+1; ++i) {
