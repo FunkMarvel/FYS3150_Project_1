@@ -34,26 +34,8 @@ int main(int argc, char** argv)
   // Declaring variables for CPU time measurement
   clock_t start, finish;
 
-  // Start of general algorithm
-  start = clock();
-
-  // General algorithm calls
-  general_forward(a, b, c, b_twiddle, N);
-  general_backward(b, b_twiddle, c, u, N);
-
-  // General algorithm finished
-  finish = clock();
-
-  // Print time spent
-  double general_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
-  cout << "General algorithm took " << general_cputime << " seconds to finish."
-       << endl;
-
-  // Calculate maximum of log10 of relative error
-  double eps_general = find_relative_error(u,u_anal,N);
-  cout << "Maximum (log10 of) relative error in general algorithm with " << N
-       << " steps: " << eps_general << endl;
-
+  // General algorithm call
+  general_main(N);
 
   vec b_recip = zeros<vec>(N); // array for 1/b.
   for (int i = 1; i < N+1; ++i) {

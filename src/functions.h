@@ -9,6 +9,10 @@ using namespace arma;
 void general_forward(vec& a, vec& b, vec& c, vec& b_twiddle, int N);
 void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N);
 
+// general_main.cpp:
+
+void general_main(int N,double h);
+
 
 //special_algorithm.cpp:
 
