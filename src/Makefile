@@ -1,7 +1,7 @@
 CC := g++
 FLAGS := -Wall -O2 -march=native
 LIBS := -larmadillo
-OFILES := main.o general_algorithm.o special_algorithm.o relative_error.o general_main.o special_main.o
+OFILES := main.o general_algorithm.o special_algorithm.o relative_error.o general_main.o special_main.o LU_main.o
 
 .PHONY: all clean run
 
@@ -27,6 +27,9 @@ special_algorithm.o: special_algorithm.cpp
 
 special_main.o: special_main.cpp
 	$(CC) $(FLAGS) special_main.cpp -c
+
+LU_main.o: LU_main.cpp
+	$(CC) $(FLAGS) LU_main.cpp -c
 
 clean:
 	rm -f *.o
