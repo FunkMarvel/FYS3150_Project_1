@@ -1,11 +1,7 @@
 #include <iostream>
-#include <armadillo>
-#include <cmath>
 #include "functions.h"
-#include "time.h"
 
 using namespace std;
-using namespace arma;
 
 int main(int argc, char** argv)
 {
