@@ -6,8 +6,8 @@ LIBS := -larmadillo
 
 all: main.exe
 
-main.exe: main.o general_algorithm.o special_algorithm.o relative_error.o
-	$(CC) $(FLAGS) main.o general_algorithm.o special_algorithm.o relative_error.o -o main.exe $(LIBS)
+main.exe: main.o general_algorithm.o special_algorithm.o relative_error.o special_main.o
+	$(CC) $(FLAGS) main.o general_algorithm.o special_algorithm.o relative_error.o special_main.o -o main.exe $(LIBS)
 
 main.o: main.cpp
 	$(CC) $(FLAGS) main.cpp -c
@@ -20,6 +20,9 @@ relative_error.o: relative_error.cpp
 
 special_algorithm.o: special_algorithm.cpp
 	$(CC) $(FLAGS) special_algorithm.cpp -c
+
+special_main.o: special_main.cpp
+	$(CC) $(FLAGS) special_main.cpp -c
 
 clean:
 	rm -f *.o

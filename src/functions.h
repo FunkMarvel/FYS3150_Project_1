@@ -15,6 +15,10 @@ void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N);
 void special_forward(vec& b_recip, vec& b_twiddle, int N);
 void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N);
 
+//special_main.cpp:
+
+void special_main(int N, double h);
+
 // relative_error.cpp:
 
 double find_relative_error(vec& u, vec& u_anal, int N);
