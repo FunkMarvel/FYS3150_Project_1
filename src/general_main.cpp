@@ -7,7 +7,7 @@
 using namespace std;
 using namespace arma;
 
-void general_main(int N, double h)
+void general_main(int N, double h,bool write)
 {
   vec a(N-1); a.fill(-1);           // Vector for lower diagonal.
   vec b(N); b.fill(2);              // Vector for diagonal.

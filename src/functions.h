@@ -11,7 +11,7 @@ void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N);
 
 // general_main.cpp:
 
-void general_main(int N,double h);
+void general_main(int N,double h,bool write);
 
 
 // special_algorithm.cpp:
