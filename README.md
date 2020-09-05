@@ -17,7 +17,7 @@ $ python3 data_analysis.py error plot
 $ python3 data_analysis.py plot 7 error
 ```
 ### Optional arguments:
-##### The largest $n$ for which to run the algorithms.
+##### The largest n for which to run the algorithms.
   * If you provide an integer i, the script will run the algorithms for every power of ten from n = 10^{1} to n = 10^{i}.
   * n = 10^{3} if no integer is provided on the command line.
   * Example running algorithms for n = 10^{1}, 10^{2}, 10^{3}, 10^{4}:
