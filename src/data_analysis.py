@@ -13,7 +13,7 @@ n_max = int(1e3)
 if len(sys.argv) > 1:
     for i in range(1, len(sys.argv)):
         if sys.argv[i].isnumeric():
-            n_max = int(sys.argv[i])  # setting custom N values
+            n_max = int(10 * sys.argv[i])  # setting custom N values
         if sys.argv[i] == "plot":
             plotflag = True  # enable plotting of general algorithm
         if sys.argv[i] == "error":
