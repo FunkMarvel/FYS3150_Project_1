@@ -4,12 +4,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-if len(sys.argv) > 1:
-    plotflag = (sys.argv[1] == "plot")
-else:
-    plotflag = False
+# default arguments:
+plotflag = False
+n_max = int(1e3)
 
-N = np.array([10, 100, 1000])  # array of N values.
+# checking for commandline arguments:
+if len(sys.argv) > 1:
+    for i in range(1, len(sys.argv)):
+        if sys.argv[i].isnumeric():
+            n_max = int(sys.argv[i])  # setting custom N values
+        if sys.argv[i] == "plot":
+            plotflag = True  # enable plotting of general algorithm
+
+
+lnmax = int(np.log10(n_max)+1)
+N = np.asarray([10**i for i in range(1, lnmax)])  # array of N values.
 x = []
 u_anal = []
 u_general = []
