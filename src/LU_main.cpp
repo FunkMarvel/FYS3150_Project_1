@@ -10,8 +10,8 @@ using namespace arma;
 void LU_main(int N, double h, vec& u_anal, vec& x)
 {
   mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
-  // mat L,U;                          // Matrices to store LU decomposition
-  vec b_twiddle = zeros<vec>(N);    // Vector for function value (times h^2)
+  mat L,U;                          // Matrices to store LU decomposition
+  vec b_twiddle = zeros<mat>(N);    // Vector for function value (times h^2)
 
   // Generating values for input function
   for (int i = 0; i<N; ++i){
@@ -35,14 +35,12 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   // Start of general algorithm
   start = clock();
 
-  /* ended up changing to direct solve, because the two step solution is far too slow
-  and inaccurate: */
   // LU decomposition with armadillo
-  // lu(L,U,A);
-  vec u = solve(A, b_twiddle);
+  lu(L,U,A);
+
   // Solving resulting equation sets
-  // vec y = solve(U,b_twiddle);
-  // vec u = solve(L,y);
+  vec y = solve(L,b_twiddle);
+  vec u = solve(U,y);
 
   // General algorithm finished
   finish = clock();

@@ -58,20 +58,20 @@ def plotter():
         plt.grid()
 
         # plt.figure()
-        # plt.plot(x, u_anal, label="analytic solution")
-        # plt.plot(x, u_special, label="numerical solution")
+        # plt.plot(x[i], u_anal[i], label="analytic solution")
+        # plt.plot(x[i], u_special[i], label="numerical solution")
         # plt.xlabel("$x$")
         # plt.ylabel("$f(x)$")
-        # plt.title(f"Numerical integration using special algorithm, N = {i}")
+        # plt.title(f"Numerical integration using special algorithm, N = {N[i]}")
         # plt.legend()
         # plt.grid()
-        #
+
         # plt.figure()
-        # plt.plot(x, u_anal, label="analytic solution")
-        # plt.plot(x, u_LUdecomp, label="numerical solution")
+        # plt.plot(x[i], u_anal[i], label="analytic solution")
+        # plt.plot(x[i], u_LUdecomp[i], label="numerical solution")
         # plt.xlabel("$x$")
         # plt.ylabel("$f(x)$")
-        # plt.title(f"Numerical integration using LU decomposition, N = {i}")
+        # plt.title(f"Numerical integration using LU decomposition, N = {N[i]}")
         # plt.legend()
         # plt.grid()
 
