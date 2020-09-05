@@ -4,17 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-try:
+if len(sys.argv) > 1:
     plotflag = (sys.argv[1] == "plot")
-except:
+else:
     plotflag = False
 
-N = np.array([10, 100, 1000])  # array of N values.
-x = []
-u_anal = []
-u_general = []
-u_special = []
-u_LUdecomp = []
+    N = np.array([10, 100, 1000])  # array of N values.
+    x = []
+    u_anal = []
+    u_general = []
+    u_special = []
+    u_LUdecomp = []
 
 
 def main():
