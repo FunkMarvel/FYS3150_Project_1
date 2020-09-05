@@ -25,7 +25,7 @@ def main():
     generate_data()
     if plotflag:
         plotter()
-    plt.show()  # displaying plots
+        plt.show()  # displaying plots
 
 
 def generate_data():
