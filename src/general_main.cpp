@@ -33,6 +33,7 @@ void general_main(int N, double h, vec& u_anal, vec& x)
   // General algorithm finished
   finish = clock();
 
+  // setting known values:
   u[0] = 0;
   u[N-1] = 0;
 

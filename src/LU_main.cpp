@@ -35,6 +35,8 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   // Start of general algorithm
   start = clock();
 
+  /* ended up changing to direct solve, because the two step solution is far too slow
+  and inaccurate: */
   // LU decomposition with armadillo
   // lu(L,U,A);
   vec u = solve(A, b_twiddle);
@@ -45,6 +47,7 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   // General algorithm finished
   finish = clock();
 
+  // setting known values:
   u[0] = 0;
   u[N-1] = 0;
 
