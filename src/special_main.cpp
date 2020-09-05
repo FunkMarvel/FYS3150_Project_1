@@ -34,6 +34,9 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
   // Special algorithm finished
   finish = clock();
 
+  u[0] = 0;
+  u[N-1] = 0;
+
   // Print time spent
   double special_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
   cout << "Special algorithm took " << special_cputime << " seconds to finish."
@@ -43,4 +46,6 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
   double eps_special = find_relative_error(u,u_anal,N);
   cout << "Maximum (log10 of) relative error in special algorithm with " << N
        << " steps: " << eps_special << endl;
+
+  u.save("u_special.bin", raw_binary);
 }

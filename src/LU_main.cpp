@@ -10,7 +10,7 @@ using namespace arma;
 void LU_main(int N, double h, vec& u_anal, vec& x)
 {
   mat A = zeros<mat>(N,N);          // Matrix to use with LU decomposition
-  mat L,U;                          // Matrices to store LU decomposition
+  // mat L,U;                          // Matrices to store LU decomposition
   vec b_twiddle = zeros<vec>(N);    // Vector for function value (times h^2)
 
   // Generating values for input function
@@ -36,14 +36,17 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   start = clock();
 
   // LU decomposition with armadillo
-  lu(L,U,A);
-
+  // lu(L,U,A);
+  vec u = solve(A, b_twiddle);
   // Solving resulting equation sets
-  vec y = solve(U,b_twiddle);
-  vec u = solve(L,y);
+  // vec y = solve(U,b_twiddle);
+  // vec u = solve(L,y);
 
   // General algorithm finished
   finish = clock();
+
+  u[0] = 0;
+  u[N-1] = 0;
 
   // Print time spent
   double LU_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
@@ -54,4 +57,6 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   double eps_LU = find_relative_error(u,u_anal,N);
   cout << "Maximum (log10 of) relative error with the LU decomposition solver with " << N
        << " steps: " << eps_LU << endl;
+
+  u.save("u_LUdecomp.bin", raw_binary);
 }

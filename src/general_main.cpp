@@ -33,6 +33,9 @@ void general_main(int N, double h, vec& u_anal, vec& x)
   // General algorithm finished
   finish = clock();
 
+  u[0] = 0;
+  u[N-1] = 0;
+
   // Print time spent
   double general_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
   cout << "General algorithm took " << general_cputime << " seconds to finish."
@@ -42,4 +45,6 @@ void general_main(int N, double h, vec& u_anal, vec& x)
   double eps_general = find_relative_error(u,u_anal,N);
   cout << "Maximum (log10 of) relative error in general algorithm with " << N
        << " steps: " << eps_general << endl;
+
+  u.save("u_general.bin", raw_binary);
 }
