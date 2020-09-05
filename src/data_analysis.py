@@ -20,7 +20,7 @@ if len(sys.argv) > 1:
             errorflag = True
 
 
-lnmax = int(np.log10(n_max)+1)
+lnmax = int(np.log10(n_max))
 N = np.asarray([10**i for i in range(1, lnmax)])  # array of N values.
 x = []
 u_anal = []

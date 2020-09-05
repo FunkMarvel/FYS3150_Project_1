@@ -1,5 +1,5 @@
-# FYS3150_Project_1
-Project 1, FYS3150
+# FYS3150 Project 1
+Authors: *Anders P. Åsbø, Eivind Støland*
 
 To test run the project try
 ```console
