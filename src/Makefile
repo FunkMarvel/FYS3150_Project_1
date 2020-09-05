@@ -36,6 +36,9 @@ clean:
 	rm -f *.exe
 	rm -f *.bin
 
+cleanbin:
+	rm -f *.bin
+
 run:
 	./main.exe
 

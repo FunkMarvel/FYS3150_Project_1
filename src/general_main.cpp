@@ -47,5 +47,5 @@ void general_main(int N, double h, vec& u_anal, vec& x)
   cout << "Maximum (log10 of) relative error in general algorithm with " << N
        << " steps: " << eps_general << endl;
 
-  u.save("u_general.bin", raw_binary);
+  u.save("u_general" + std::to_string(N) + ".bin", raw_binary);
 }

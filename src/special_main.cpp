@@ -48,5 +48,5 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
   cout << "Maximum (log10 of) relative error in special algorithm with " << N
        << " steps: " << eps_special << endl;
 
-  u.save("u_special.bin", raw_binary);
+  u.save("u_special" + std::to_string(N) + ".bin", raw_binary);
 }

@@ -61,5 +61,5 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
   cout << "Maximum (log10 of) relative error with the LU decomposition solver with " << N
        << " steps: " << eps_LU << endl;
 
-  u.save("u_LUdecomp.bin", raw_binary);
+  u.save("u_LUdecomp" + std::to_string(N) + ".bin", raw_binary);
 }

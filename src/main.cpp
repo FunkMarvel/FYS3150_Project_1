@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "functions.h"
 
 using namespace std;
@@ -14,8 +15,8 @@ int main(int argc, char** argv)
   for (int i=0; i<N; ++i){
     u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
   }
-  x.save("x.bin", raw_binary);
-  u_anal.save("u_anal.bin", raw_binary);
+  x.save("x" + std::to_string(N) + ".bin", raw_binary);
+  u_anal.save("u_anal" + std::to_string(N) + ".bin", raw_binary);
 
   // Performing general algorithm with benchmark.
   general_main(N, h, u_anal, x);
