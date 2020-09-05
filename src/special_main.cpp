@@ -12,7 +12,7 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
   vec b_twiddle = zeros<vec>(N);  // Vector with known points.
   vec b_recip = zeros<vec>(N);    // Vector with 1/b.
 
-
+  // Generating values for input function
   for (int i = 0; i<N; ++i){
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
   }
