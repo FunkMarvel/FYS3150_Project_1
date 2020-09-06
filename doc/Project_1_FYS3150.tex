@@ -151,14 +151,40 @@
 \tableofcontents
 
 \section{Introduction} \label{sec:I}
-One of the most versitile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerial integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialzed Thomas algorithm, as well as LU-decomposition. T
+One of the most versitile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerial integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialzed Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo librarys solver.
 
 \section{Formalism} \label{sec:II}
+
 
 \section{Implementation} \label{sec:III}
 
 \section{Analysis} \label{sec:IV}
-\subsection{Relative error for Thomas' algorithms} \label{subsec:IV:A}
+\subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:1}
+	\includegraphics[width=\columnwidth]{plots/Figure_1.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{1}\).}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:2}
+	\includegraphics[width=\columnwidth]{plots/Figure_2.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{2}\).}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:3}
+	\includegraphics[width=\columnwidth]{plots/Figure_3.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{3}\).}
+\end{figure}
+
+\subsection{Relative error for Thomas' algorithms} \label{subsec:IV:B}
 \begin{table}[H]
 	\label{table:iv:a:1}
 	\begin{tabular}{|c|c|c|c|}
@@ -176,6 +202,8 @@ One of the most versitile tools in modern science is numerical integration, thus
 \end{table}
 
 \section{Conclusion} \label{sec:V}
+
+\bibliography{kilder}{}
 
 \appendix
 \section{Source code}
