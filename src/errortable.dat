@@ -1,0 +1,5 @@
+Relative error as function of step size
+log10(h): && log10(epsilon) general algorithm && log10(epsilon) special algorithm
+-1.041393e+00 && 3.026200e-01 && 3.601314e-01
+-2.004321e+00 && 3.426303e-02 && 4.249885e-02
+-3.000434e+00 && 3.474750e-03 && 4.338587e-03

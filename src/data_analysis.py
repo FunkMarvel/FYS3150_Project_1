@@ -21,7 +21,7 @@ if len(sys.argv) > 1:
 
 
 lnmax = int(np.log10(n_max))
-N = np.asarray([10**i for i in range(1, lnmax)])  # array of N values.
+N = np.asarray([10**i for i in range(1, lnmax+1)])  # array of N values.
 x = []
 u_anal = []
 u_general = []
@@ -95,20 +95,13 @@ def error_analysis():
             np.abs((u_general[j][1:-1]-u_anal[j][1:-1]) / u_anal[j][1:-1])))
         error[1, j] = np.max(np.log10(
             np.abs((u_special[j][1:-1]-u_anal[j][1:-1]) / u_anal[j][1:-1])))
-        # if N[i] <= 10000:
-        #     error[2, j] = np.max(np.log10(
-        #         np.abs(
-        #             (u_LUdecomp[j][1:-1]-u_anal[j][1:-1]) / u_anal[j][1:-1])))
 
-    plt.figure()
-    plt.plot(log10_of_h, error[0, :], label="General algorithm")
-    plt.plot(log10_of_h, error[1, :], label="Special algorithm")
-    # plt.plot(log10_of_h[:5], error[2, :], label="LU decomposition")
-    plt.xlabel("$\log_{10}(h)$")
-    plt.ylabel("$\log_{10}(\epsilon_{rel})$")
-    plt.title(f"Relative error as function of step size")
-    plt.legend()
-    plt.grid()
+    with open("errortable.dat", "w") as outfile:
+        outfile.write("Relative error as function of step size\n")
+        outfile.write("log10(h): && log10(epsilon) general algorithm && log10(epsilon) special algorithm\n")
+        for i in range(len(N)):
+            outfile.write(
+                f"{log10_of_h[i]:e} && {error[0,i]:e} && {error[1,i]:e}\n")
 
 
 if __name__ == '__main__':
