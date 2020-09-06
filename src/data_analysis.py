@@ -7,20 +7,20 @@ import matplotlib as mpl
 # default arguments:
 plotflag = False
 errorflag = False
-n_max = int(1e3)
+n_max = 3
 
 # checking for commandline arguments:
 if len(sys.argv) > 1:
     for i in range(1, len(sys.argv)):
         if sys.argv[i].isnumeric():
-            n_max = int(10 * sys.argv[i])  # setting custom N values
+            n_max = int(sys.argv[i])  # setting custom N values
         if sys.argv[i] == "plot":
             plotflag = True  # enable plotting of general algorithm
         if sys.argv[i] == "error":
             errorflag = True
 
 
-lnmax = int(np.log10(n_max))
+lnmax = n_max
 N = np.asarray([10**i for i in range(1, lnmax+1)])  # array of N values.
 x = []
 u_anal = []
@@ -98,10 +98,11 @@ def error_analysis():
 
     with open("errortable.dat", "w") as outfile:
         outfile.write("Relative error as function of step size\n")
-        outfile.write("log10(h): && log10(epsilon) general algorithm && log10(epsilon) special algorithm\n")
+        outfile.write(
+            "log10(h): | epsilon general algorithm: | epsilon special algorithm: | N\n")
         for i in range(len(N)):
             outfile.write(
-                f"{log10_of_h[i]:e} && {error[0,i]:e} && {error[1,i]:e}\n")
+                f"{log10_of_h[i]:e} | {error[0,i]:e} | {error[1,i]:e} | 10^{i+1}\n")
 
 
 if __name__ == '__main__':
