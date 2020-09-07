@@ -967,3 +967,6 @@ MigrationBackup/
 src/*.bin
 
 # End of https://www.toptal.com/developers/gitignore/api/python,c++,linux,windows,latex,visualstudio,visualstudiocode,pycharm
+
+# Data files
+*.dat
