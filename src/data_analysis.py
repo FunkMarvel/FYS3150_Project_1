@@ -73,7 +73,7 @@ def plotter():
     for i in range(len(N)):
         # plotting numerical solve vs analytic solve:
         plt.figure()
-        plt.plot(x[i], u_anal[i], label="analytic solution")
+        plt.plot(x[2], u_anal[2], label="analytic solution")
         plt.plot(x[i], u_general[i], label="numerical solution")
         plt.xlabel("$x$")
         plt.ylabel("$f(x)$")
