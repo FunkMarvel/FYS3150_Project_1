@@ -1,0 +1,19 @@
+General algorithm took 1e-06 seconds to finish.
+Special algorithm took 1e-06 seconds to finish.
+Solving with LU decomposition took 0.000309 seconds to finish.
+Maximum (log10 of) relative error with the LU decomposition solver with 10 steps: 1.05242
+
+General algorithm took 3e-06 seconds to finish.
+Special algorithm took 1e-06 seconds to finish.
+Solving with LU decomposition took 0.000755 seconds to finish.
+Maximum (log10 of) relative error with the LU decomposition solver with 100 steps: 1.00957
+
+General algorithm took 1.8e-05 seconds to finish.
+Special algorithm took 7e-06 seconds to finish.
+Solving with LU decomposition took 0.171256 seconds to finish.
+Maximum (log10 of) relative error with the LU decomposition solver with 1000 steps: 0.00347475
+
+General algorithm took 0.000119 seconds to finish.
+Special algorithm took 4.6e-05 seconds to finish.
+Solving with LU decomposition took 158.701 seconds to finish.
+Maximum (log10 of) relative error with the LU decomposition solver with 10000 steps: 0.000347972
