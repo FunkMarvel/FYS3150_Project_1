@@ -40,7 +40,6 @@ def main():
 
     if plotflag:
         plotter()
-    if errorflag or plotflag:
         plt.show()  # displaying plots
 
 
@@ -87,15 +86,16 @@ def error_analysis():
     """
     Function for calculating relative error and saving table to file.
     """
-    error = np.empty((3, len(N)))
-    log10_of_h = np.log10(1/(N+1))
+    error = np.empty((3, len(N)))  # array for errors.
+    log10_of_h = np.log10(1/(N+1))  # array for log of stepsize
 
-    for j in range(len(N)):
+    for j in range(len(N)):  # calculating errors.
         error[0, j] = np.max(np.log10(
             np.abs((u_general[j][1:-1]-u_anal[j][1:-1]) / u_anal[j][1:-1])))
         error[1, j] = np.max(np.log10(
             np.abs((u_special[j][1:-1]-u_anal[j][1:-1]) / u_anal[j][1:-1])))
 
+    # writing errortable to file:
     with open("errortable.dat", "w") as outfile:
         outfile.write("Relative error as function of step size\n")
         outfile.write(
