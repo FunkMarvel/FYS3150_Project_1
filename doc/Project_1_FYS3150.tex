@@ -169,7 +169,7 @@ Poisson's equation is a well known equation from electromagnetism:
 where $\boldsymbol r$ is the position, $\rho(\boldsymbol r)$ is the charge density, and $\boldsymbol \Phi (\boldsymbol r)$ is the electrostatic potential. If we assume spherical symmetry, this simplifies into a one-dimensional equation:
 
 \begin{align*}
-\frac{1}{r^2} \frac{d}{dr} (r^2 \frac{d\boldsymbol \Phi)}{dr} = - 4\pi \rho \, ,
+\frac{1}{r^2} \frac{d}{dr} \bigg(r^2 \frac{d\boldsymbol \Phi}{dr} \bigg) = - 4\pi \rho \, ,
 \end{align*}
 
 where $r = |\boldsymbol r|$. We can substitute $\boldsymbol \Phi (r) = \phi(r)/r$, which gives us:
@@ -394,6 +394,8 @@ v_i &= \frac{\tilde{f}_i - c_i v_{i+1}}{\tilde{d}_i} \\
 
 This can be optimized somewhat, which will be discussed in section III. Further details on the topics discussed in this section and on LU decomposition can be found in \citep{Hjorth-Jensen2015}.
 
+\newpage
+
 
 \section{Implementation} \label{sec:III}
 
@@ -447,13 +449,13 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 	\begin{tabular}{|c|c|c|}
 		Algorithm & Execution time \([s]\) & \(N\) \\\hline
 		General Thomas & \(\num{1e-06}\) & \(10^{1}\) \\
-		General Thomas & \(\num{2e-06}\) & \(10^{2}\) \\
+		General Thomas & \(\num{3e-06}\) & \(10^{2}\) \\
 		General Thomas & \(\num{1.8e-05}\) & \(10^{3}\) \\
-		General Thomas & \(\num{0.000175}\) & \(10^{4}\) \\\hline
+		General Thomas & \(\num{0.000119}\) & \(10^{4}\) \\\hline
 		Specialized Thomas & \(\num{1e-06}\) & \(10^{1}\) \\
 		Specialized Thomas & \(\num{1e-06}\) & \(10^{2}\) \\
-		Specialized Thomas & \(\num{9e-06}\) & \(10^{3}\) \\
-		Specialized Thomas & \(\num{9.8e-05}\) & \(10^{4}\) \\\hline
+		Specialized Thomas & \(\num{7e-06}\) & \(10^{3}\) \\
+		Specialized Thomas & \(\num{4.6e-05}\) & \(10^{4}\) \\\hline
 		LU decomposition & \(\num{0.000309}\) & \(10^{1}\) \\
 		LU decomposition & \(\num{0.000755}\) & \(10^{2}\) \\
 		LU decomposition & \(\num{0.171256}\) & \(10^{3}\) \\
