@@ -10,7 +10,7 @@ using namespace arma;
 void LU_main(int N, double h, vec& u_anal, vec& x)
 {
   mat A(N,N);          // Matrix to use with LU decomposition
-  mat L,U;                          // Matrices to store LU decomposition
+  mat L,U;             // Matrices to store LU decomposition
   vec b_twiddle(N);    // Vector for function value (times h^2)
 
   // Generating values for input function

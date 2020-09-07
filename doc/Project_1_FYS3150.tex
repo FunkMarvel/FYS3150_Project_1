@@ -151,9 +151,132 @@
 \tableofcontents
 
 \section{Introduction} \label{sec:I}
-One of the most versitile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerial integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialzed Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo librarys solver.
+
+One of the most versatile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerical integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialized Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo library's solver. We measured the time spent by the various algorithms and their maximum relative error (to the analytic solution) in order to compare them quantitavely to see if they behave as expected. 
+
+
+
+
 
 \section{Formalism} \label{sec:II}
+
+Poisson's equation is a well known equation from electromagnetism:
+
+\begin{align*}
+\nabla^2 \boldsymbol\Phi (\boldsymbol r) &= -4\pi \rho (\boldsymbol r) \, ,
+\end{align*}
+
+where $\boldsymbol r$ is the position, $\rho(\boldsymbol r)$ is the charge density, and $\boldsymbol \Phi (\boldsymbol r)$ is the electrostatic potential. If we assume spherical symmetry, this simplifies into a one-dimensional equation:
+
+\begin{align*}
+\frac{1}{r^2} \frac{d}{dr} (r^2 \frac{d\boldsymbol \Phi)}{dr} = - 4\pi \rho \, ,
+\end{align*}
+
+where $r = |\boldsymbol r|$. We can substitute $\boldsymbol \Phi (r) = \phi(r)/r$, which gives us:
+
+\begin{align*}
+\frac{d^2 \phi}{dr^2} = - 4\pi r \rho (r)
+\end{align*}
+
+This is a second order differential equation which can be written generally as:
+
+\begin{align*}
+-u''(x) = f(x) \, , 
+\end{align*}
+
+where we have changed $r \to x$, $\phi \to u$ and $4\pi r \rho \to f(x)$. In order to proceed we need to pick a specific sample problem to be used. We choose to solve this equation with Dirichlet boundary conditions, meaning that $x \in (0,1)$ and $u(0)=u(1)=0$. As for the source term $f$ we choose $f(x) = 100 e^{-10 x}$. This has the advantage of being possible to solve analytically:
+
+\begin{align*}
+-u''(x) &= f(x) \\
+-u''(x) &= 100 e^{-10x} \\
+-u'(x) &= -10e^{-10x} - C \\
+-u(x) &= e^{-10x} - Cx - D \\
+u(x) &= Cx + D - e^{-10x} \, ,
+\end{align*}
+
+where $C$ and $D$ are arbitrary constants. We use the boundary conditions in order to determine them:
+
+\begin{align*}
+u(0) &= 0 \\
+\implies D - 1 &= 0 \\
+D &= 1 \\
+u(1) &= 0 \\
+\implies C + 1 - e^{-10} &= 0 \\
+C &= -(1 - e^{-10})
+\end{align*}
+
+All in all this gives us that:
+
+\begin{align*}
+u(x) &= 1 - (1 - e^{-10}) x - e^{-10x}
+\end{align*}
+
+Now we have an analytical solution we can compare our numerical solutions to later. 
+
+In order to solve the problem numerically we first need some definitions in order. We discretize with the grid points given by $x_i = ih$, in the interval from $x_0 = 0$ to $x_{n+1} = 1$. The step length is then given by $h = 1/(n+1)$. We name the discretized approximation to the solution $v_i$. We can then approximate the second derivative of $u$ as:
+
+\begin{align*}
+- \frac{v_{i+1} + v_{i-1} - 2v_i}{h^2} &= f_i \, ,
+\end{align*}
+
+where $f_i = f(x_i)$ and $i = 1,...,n$. We look at some terms separately in order to find the matrix-vector form of this problem. First we look at the expression at the boundaries, starting with $i=1$:
+
+\begin{align*}
+-\frac{v_2 + v_0 - 2v_1}{h^2} &= f_1 \\
+2v_1 - v_2 &= h^2 f_1 \\
+2v_1 - v_2 &= \tilde{b}_1 \, ,
+\end{align*}
+
+where we have defined a new variable $\tilde{b}_i = h^2 f_i$ and applied the relevant boundary condition. We then look at the expression when $i=n$:
+
+\begin{align*}
+-\frac{v_{n+1} + v_{n-1} - 2v_{n}}{h^2} &= f_n \\
+-v_{n-1} + 2v_n &= \tilde{b}_n \, ,
+\end{align*}
+
+where we also applied the relevant boundary condition. The general expression can also be rewritten as:
+
+\begin{align*}
+-v_{i-1} + 2v_i - v_{i+1} &= \tilde{b}_i
+\end{align*}
+
+This now clearly takes the shape of a matrix-vector problem. We define a vector $\textbf{v}$ which contains all the $v_i$ and similarly a vector $\tilde{\textbf{b}}$ which contains all the $b_i$. The coefficients on the left-hand side of the equations determine a $n\times n$-matrix \textbf{A}:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+2 & -1 & 0 & ... & ... & 0 \\
+-1 & 2 & -1 & 0 & ... & ... \\
+0 & -1 & 2 & -1 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & -1 & 2 & -1 \\
+0 & ... & ... & 0 & -1 & 2 
+\end{bmatrix}
+\end{align*}
+
+The matrix-vector problem we need to solve then is:
+
+\begin{align*}
+\textbf{A}\textbf{v} &= \tilde{\textbf{b}}
+\end{align*}
+
+\textbf{A} is a tridiagonal matrix. This means we can apply methods specialized for this kind of linear algebra problem. A tridiagonal matrix can be decomposed into three vectors, one for the diagonal and one each for the bands above and below the diagonal. We choose the vectors \textbf{a}, \textbf{b} and \textbf{c}. Their components are defined the following way:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+b_1 & c_1 & 0 & ... & ... & 0 \\
+a_1 & b_2 & c_2 & 0 & ... & ... \\
+0 & a_2 & b_3 & c_3 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & a_{n-2} & b_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & a_{n-1} & b_n 
+\end{bmatrix}
+\end{align*}
+
+As the bands above and below the diagonal have one element less than the diagonal itself, we note that \textbf{a} and \textbf{c} both have $n-1$ elements instead of $n$.
+
+
+
+
 
 
 \section{Implementation} \label{sec:III}
