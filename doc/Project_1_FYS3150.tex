@@ -365,9 +365,34 @@ Now that we know one value \textbf{v}, this will now uniquely determine the othe
 v_i &= \frac{\tilde{f}_i - c_i v_{i+1}}{\tilde{d}_i}
 \end{align*}
 
-As long as we know the last element in \textbf{v} (which we do at this point) this relation allows us to find $v_i$ for $i = n-1,...,1$. As we run through the elements from the largest $i$ to the smallest we call this part the backwards substitution part. For similar reasons we call calculating the $\tilde{d}_i$ and $\tilde{f}_i$ the forwards substitution part. This algorithm is called the Thomas algorithm \citep{Thomas1949}.
+As long as we know the last element in \textbf{v} (which we do at this point) this relation allows us to find $v_i$ for $i = n-1,...,1$. As we run through the elements from the largest $i$ to the smallest we call this part the backwards substitution part. For similar reasons we call calculating the $\tilde{d}_i$ and $\tilde{f}_i$ the forwards substitution part. This algorithm is called the Thomas algorithm \citep{Thomas1949} and is used for solving a general tridiagonal matrix. In our case however, we know what the elements of \textbf{A} are, allowing us to form a special algorithm. First we look at the $\tilde{d}_i$:
 
+\begin{align*}
+\tilde{d}_i &= b_i - \frac{a_i c_{i-1}}{\tilde{d}_{i-1}}
+\end{align*}
 
+We recognize that $b_i = 2$, and $a_i = c_{i-1} = i-1$. This simplifies the equation:
+
+\begin{align*}
+\tilde{d}_i &= 2 - \frac{1}{\tilde{d}_{i-1}} \\
+&= \frac{i+1}{i}
+\end{align*}
+
+We can simplify $\tilde{f}_i$ in a similar way:
+
+\begin{align*}
+\tilde{f}_i &= \tilde{b}_i - \frac{a_i \tilde{f}_{i-1}}{\tilde{d}_{i-1}} \\
+\tilde{f}_i &= \tilde{b}_i + \frac{i-1}{i}\tilde{f}_{i-1}
+\end{align*}
+
+This also gives us a simplification for $v_i$:
+
+\begin{align*}
+v_i &= \frac{\tilde{f}_i - c_i v_{i+1}}{\tilde{d}_i} \\
+&= \frac{i}{i+1}(\tilde{f}_i + v_{i+1})
+\end{align*}
+
+This can be optimized somewhat, which will be discussed in section III.
 
 
 \section{Implementation} \label{sec:III}
