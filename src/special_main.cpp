@@ -17,16 +17,17 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
   }
 
-  // Calculating 1/b where b is the diagonal elements.
-  for (int i = 1; i < N+1; ++i) {
-    b_recip[i-1] = i/(i + 1.0);
-  }
 
   // Declaring variables for CPU time measurement
   clock_t start, finish;
 
   // Start of special algorithm
   start = clock();
+
+  // Calculating 1/b where b is the diagonal elements.
+  for (int i = 1; i < N+1; ++i) {
+    b_recip[i-1] = i/(i + 1.0);
+  }
 
   special_forward(b_recip, b_twiddle, N);
   special_backward(b_recip, b_twiddle, u, N);
