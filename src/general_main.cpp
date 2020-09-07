@@ -7,28 +7,21 @@
 using namespace std;
 using namespace arma;
 
+<<<<<<< HEAD
 void general_main(int N, double h,bool write)
+=======
+void general_main(int N, double h, vec& u_anal, vec& x)
+>>>>>>> master
 {
   vec a(N-1); a.fill(-1);           // Vector for lower diagonal.
   vec b(N); b.fill(2);              // Vector for diagonal.
   vec c(N-1); c.fill(-1);           // Vector for upper diagonal.
   vec u(N);                         // Vector for numerical solution
-  vec u_anal = zeros<vec>(N);       // Vector for analytical solution
   vec b_twiddle = zeros<vec>(N);    // Vector for function value (times h^2)
-
-  // Block to deallocate x and h once we are finished using them
-  {
-  vec x = linspace<vec>(0,1,N);     // Vector for x-values.
 
   // Generating values for input function
   for (int i = 0; i<N; ++i){
     b_twiddle[i] = h*h*100*exp(-10*x[i]);
-  }
-
-  // Generating values for analytic solution
-  for (int i=0; i<N; ++i){
-    u_anal[i] = 1 - (1 - exp(-10))*x[i] - exp(-10*x[i]);
-  }
   }
 
   // Declaring variables for CPU time measurement
@@ -44,6 +37,10 @@ void general_main(int N, double h,bool write)
   // General algorithm finished
   finish = clock();
 
+  // setting known values:
+  u[0] = 0;
+  u[N-1] = 0;
+
   // Print time spent
   double general_cputime = ( double(finish - start)/CLOCKS_PER_SEC );
   cout << "General algorithm took " << general_cputime << " seconds to finish."
@@ -53,4 +50,6 @@ void general_main(int N, double h,bool write)
   double eps_general = find_relative_error(u,u_anal,N);
   cout << "Maximum (log10 of) relative error in general algorithm with " << N
        << " steps: " << eps_general << endl;
+
+  u.save("u_general" + std::to_string(N) + ".bin", raw_binary);
 }

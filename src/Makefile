@@ -34,6 +34,10 @@ LU_main.o: LU_main.cpp
 clean:
 	rm -f *.o
 	rm -f *.exe
+	rm -f *.bin
+
+cleanbin:
+	rm -f *.bin
 
 run:
 	./main.exe

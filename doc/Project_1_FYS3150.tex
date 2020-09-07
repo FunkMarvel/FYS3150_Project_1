@@ -1,4 +1,4 @@
-\documentclass[english,notitlepage]{revtex4-1}  % defines the basic parameters of the document
+\documentclass[english,notitlepage,reprint]{revtex4-1}  % defines the basic parameters of the document
 
 % if you want a single-column, remove reprint
 
@@ -150,5 +150,63 @@
 \maketitle
 \tableofcontents
 
+\section{Introduction} \label{sec:I}
+One of the most versitile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerial integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialzed Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo librarys solver.
+
+\section{Formalism} \label{sec:II}
+
+
+\section{Implementation} \label{sec:III}
+
+\section{Analysis} \label{sec:IV}
+\subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:1}
+	\includegraphics[width=\columnwidth]{plots/Figure_1.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{1}\).}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:2}
+	\includegraphics[width=\columnwidth]{plots/Figure_2.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{2}\).}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\label{fig:iv:a:3}
+	\includegraphics[width=\columnwidth]{plots/Figure_3.png}
+	\caption{Plot of numerical and analytical solution, using the general Thomas algorithm with
+	\(N=10^{3}\).}
+\end{figure}
+
+\subsection{Relative error for Thomas' algorithms} \label{subsec:IV:B}
+\begin{table}[H]
+	\label{table:iv:a:1}
+	\begin{tabular}{|c|c|c|c|}
+		\(\log_{10}(h)\): & \(\epsilon\) general algorithm & \(\epsilon\) special algorithm & \(N\) \\
+		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(10^{1}\) \\
+		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(10^{2}\) \\
+		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(10^{3}\) \\
+		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(10^{4}\) \\
+		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & \(10^{5}\) \\
+		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & \(10^{6}\) \\
+		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & \(10^{7}\) \\
+		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & \(10^{8}\)
+	\end{tabular}
+	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas' algorithms, and \(\log_{10}\) of step size \(h\)}
+\end{table}
+
+\section{Conclusion} \label{sec:V}
+
+\bibliography{kilder}{}
+
+\appendix
+\section{Source code}
+All code for this report was written in C++ and Python 3.8, and the complete set of files can be found at \url{https://github.com/FunkMarvel/FYS3150_Project_1.git}
 
 \end{document}
