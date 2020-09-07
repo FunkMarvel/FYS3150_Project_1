@@ -264,17 +264,108 @@ The matrix-vector problem we need to solve then is:
 \begin{align*}
 \textbf{A} &= \begin{bmatrix}
 b_1 & c_1 & 0 & ... & ... & 0 \\
-a_1 & b_2 & c_2 & 0 & ... & ... \\
-0 & a_2 & b_3 & c_3 & 0 & ... \\
+a_2 & b_2 & c_2 & 0 & ... & ... \\
+0 & a_3 & b_3 & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
-0 & ... & ... & a_{n-2} & b_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & a_{n-1} & b_n 
+0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & a_{n} & b_n 
 \end{bmatrix}
 \end{align*}
 
-As the bands above and below the diagonal have one element less than the diagonal itself, we note that \textbf{a} and \textbf{c} both have $n-1$ elements instead of $n$.
+As the bands above and below the diagonal have one element less than the diagonal itself, we note that \textbf{a} and \textbf{c} both have $n-1$ elements defined this way instead of $n$ elements (as \textbf{b}). We choose, however, to let \textbf{a}'s first component to be denoted $a_2$, as the indexing then matches those along the same row of the matrix \textbf{A}.
+
+In general this gives us equations on the form:
+
+\begin{align*}
+a_i v_{i-1} + b_i v_i + c_i v_{i+1} &= \tilde{b}_i \, ,
+\end{align*}
+
+which we need to solve. As there is not element $c_n$ or $a_1$, we simply define them to be 0 instead, and thus the equation is valid from $i = 1,...,n$. Looking at the tridiagonal matrix \textbf{A} with general elements again, we can see that we can eliminate the band below the diagonal (the components of \textbf{a}). First we take the first row multiplied by $a_2/b_1$ and subtract it from row 2. This leaves us with the following matrix:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+b_1 & c_1 & 0 & ... & ... & 0 \\
+0 & b_2 - \frac{a_2c_1}{b_1} & c_2 & 0 & ... & ... \\
+0 & a_3 & b_3 & c_3 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & a_{n} & b_n 
+\end{bmatrix}
+\end{align*}
+
+We now define $\tilde{d}_2 = b_2 - \frac{a_2c_1}{b_1}$, and $\tilde{d}_1$ in order to simplify further equations:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+\tilde{d}_1 & c_1 & 0 & ... & ... & 0 \\
+0 & \tilde{d}_2 & c_2 & 0 & ... & ... \\
+0 & a_3 & b_3 & c_3 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & a_{n} & b_n 
+\end{bmatrix}
+\end{align*}
+
+We can now similarly eliminate $a_3$ by multiplying row 2 with $\frac{a_3}{\tilde{d}_2}$ and subtract this from row 3. This gives us the following:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+\tilde{d}_1 & c_1 & 0 & ... & ... & 0 \\
+0 & \tilde{d}_2 & c_2 & 0 & ... & ... \\
+0 & 0 & b_3 - \frac{a_3 c_2}{\tilde{d}_2} & c_3 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & a_{n} & b_n 
+\end{bmatrix}
+\end{align*}
+
+We now define $\tilde{d}_3 = b_3 - \frac{a_3c_2}{\tilde{d}_2}$. This process can be repeated until all the elements in the band below the diagonal are eliminated. The new diagonal elements ($\tilde{d}_i$) are given by the following formula:
+
+\begin{align*}
+\tilde{d}_i &= b_i - \frac{a_i c_{i-1}}{\tilde{d}_{i-1}} \quad , \quad i = 2,...,n \, ,
+\end{align*}
+
+with $\tilde{d}_1 = b_1$. This leaves us with a new matrix \textbf{A}:
+
+\begin{align*}
+\textbf{A} &= \begin{bmatrix}
+\tilde{d}_1 & c_1 & 0 & ... & ... & 0 \\
+0 & \tilde{d}_2 & c_2 & 0 & ... & ... \\
+0 & 0 & \tilde{d}_3 & c_3 & 0 & ... \\
+... & ... & ... & ... & ... & ... \\
+0 & ... & ... & 0 & \tilde{d}_{n-1} & c_{n-1} \\
+0 & ... & ... & 0 & 0 & \tilde{d}_n 
+\end{bmatrix}
+\end{align*}
 
 
+Now in order for us to use this to solve the problem, it also needs to be applied to $\tilde{\textbf{b}}$ simultaneously, resulting in a new vector $\tilde{\textbf{f}}$ with elements given as:
+
+\begin{align*}
+\tilde{f}_i &= \tilde{b}_i - \frac{a_i \tilde{f}_{i-1}}{\tilde{d}_{i-1}} \quad , \quad i = 2,...,n \, ,
+\end{align*}
+
+with $\tilde{f}_1 = \tilde{b}_1$. This gives us equations on the following form that we need to solve:
+
+\begin{align*}
+\tilde{d}_i v_i  + c_i v_{i+1} = \tilde{f}_i \quad , \quad i = 1,...,n
+\end{align*}
+
+We note that $c_n = 0$, which means that when $i=n$, we have that:
+
+\begin{align*}
+\tilde{d}_n v_n &= \tilde{f}_n \\
+v_n &= \frac{\tilde{f}_n}{\tilde{d}_n}
+\end{align*}
+
+Now that we know one value \textbf{v}, this will now uniquely determine the other elements. We can see this by rewriting:
+
+\begin{align*}
+\tilde{d}_i v_i  + c_i v_{i+1} &= \tilde{f}_i \\
+v_i &= \frac{\tilde{f}_i - c_i v_{i+1}}{\tilde{d}_i}
+\end{align*}
+
+As long as we know the last element in \textbf{v} (which we do at this point) this relation allows us to find $v_i$ for $i = n-1,...,1$. As we run through the elements from the largest $i$ to the smallest we call this part the backwards substitution part. For similar reasons we call calculating the $\tilde{d}_i$ and $\tilde{f}_i$ the forwards substitution part. This algorithm is called the Thomas algorithm \citep{Thomas1949}.
 
 
 
