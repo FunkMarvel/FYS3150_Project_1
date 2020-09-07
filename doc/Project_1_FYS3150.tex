@@ -398,21 +398,43 @@ As long as we know the last element in \textbf{v} (which we do at this point) th
 	\(N=10^{3}\).}
 \end{figure}
 
-\subsection{Relative error for Thomas' algorithms} \label{subsec:IV:B}
+\subsection{Relative error for Thomas algorithms} \label{subsec:IV:B}
 \begin{table}[H]
-	\label{table:iv:a:1}
-	\begin{tabular}{|c|c|c|c|}
-		\(\log_{10}(h)\): & \(\epsilon\) general algorithm & \(\epsilon\) special algorithm & \(N\) \\
-		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(10^{1}\) \\
-		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(10^{2}\) \\
-		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(10^{3}\) \\
-		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(10^{4}\) \\
-		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & \(10^{5}\) \\
-		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & \(10^{6}\) \\
-		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & \(10^{7}\) \\
-		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & \(10^{8}\)
+	\label{table:iv:b:1}
+	\begin{tabular}{|c|c|c|c|c|}
+		\(\log_{10}(h)\): & \(\epsilon\) General & \(\epsilon\) Special & \(\epsilon\) LU & \(N\) \\\hline
+		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(\num{1.05242e+00}\) & \(10^{1}\) \\
+		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(\num{1.00957e+00}\) & \(10^{2}\) \\
+		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(\num{3.47475e-03}\) & \(10^{3}\) \\
+		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(\num{3.47972e-04}\) & \(10^{4}\) \\
+		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & no data & \(10^{5}\) \\
+		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & no data & \(10^{6}\) \\
+		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & no data & \(10^{7}\) \\
+		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & no data & \(10^{8}\)
 	\end{tabular}
-	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas' algorithms, and \(\log_{10}\) of step size \(h\)}
+	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\).}
+\end{table}
+
+\subsection{Benchmarks} \label{subsec:IV:C}
+\begin{table}[H]
+	\centering
+	\label{table:iv:c:1}
+	\begin{tabular}{|c|c|c|}
+		Algorithm & Execution time \([s]\) & \(N\) \\\hline
+		General Thomas & \(\num{1e-06}\) & \(10^{1}\) \\
+		General Thomas & \(\num{3e-06}\) & \(10^{2}\) \\
+		General Thomas & \(\num{1.8e-05}\) & \(10^{3}\) \\
+		General Thomas & \(\num{0.000119}\) & \(10^{4}\) \\\hline
+		Specialized Thomas & \(\num{1e-06}\) & \(10^{1}\) \\
+		Specialized Thomas & \(\num{1e-06}\) & \(10^{2}\) \\
+		Specialized Thomas & \(\num{7e-06}\) & \(10^{3}\) \\
+		Specialized Thomas & \(\num{4.6e-05}\) & \(10^{4}\) \\\hline
+		LU decomposition & \(\num{0.000309}\) & \(10^{1}\) \\
+		LU decomposition & \(\num{0.000755}\) & \(10^{2}\) \\
+		LU decomposition & \(\num{0.171256}\) & \(10^{3}\) \\
+		LU decomposition & \(\num{158.701}\) & \(10^{4}\)
+	\end{tabular}
+	\caption{Table of execution time in seconds for general and special Thomas algorithms, and LU decomposition.}
 \end{table}
 
 \section{Conclusion} \label{sec:V}
