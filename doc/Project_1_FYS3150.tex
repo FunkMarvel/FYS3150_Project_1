@@ -37,20 +37,39 @@
 
 %% Defines the style of the programming listing
 %% This is actually my personal template, go ahead and change stuff if you want
-\lstset{ %
-	inputpath=,
-	backgroundcolor=\color{white!88!black},
-	basicstyle={\ttfamily\scriptsize},
-	commentstyle=\color{magenta},
-	language=Python,
-	morekeywords={True,False},
-	tabsize=4,
-	stringstyle=\color{green!55!black},
-	frame=single,
-	keywordstyle=\color{blue},
-	showstringspaces=false,
-	columns=fullflexible,
-	keepspaces=true}
+\lstnewenvironment{python}{
+	\lstset{ %
+		inputpath=,
+		backgroundcolor=\color{white!88!black},
+		basicstyle={\ttfamily\tiny},
+		commentstyle=\color{magenta},
+		language=Python,
+		morekeywords={True,False},
+		tabsize=4,
+		stringstyle=\color{green!55!black},
+		frame=single,
+		keywordstyle=\color{blue},
+		showstringspaces=false,
+		columns=fullflexible,
+		keepspaces=true}
+}{}
+
+\lstnewenvironment{cpp}{
+	\lstset{ %
+		inputpath=,
+		backgroundcolor=\color{white!88!black},
+		basicstyle={\ttfamily\tiny},
+		commentstyle=\color{magenta},
+		language=C++,
+		morekeywords={True,False},
+		tabsize=4,
+		stringstyle=\color{green!55!black},
+		frame=single,
+		keywordstyle=\color{blue},
+		showstringspaces=false,
+		columns=fullflexible,
+		keepspaces=true}
+}{}
 
 \lstset{literate=
   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
@@ -396,6 +415,33 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 
 
 \section{Implementation} \label{sec:III}
+The general Thomas algorithm is implemented directly in two C++ functions. The first is a function performing the forward substitution:
+\begin{cpp}
+void general_forward(vec& a, vec& b, vec& c, vec& b_twiddle, int N)
+{
+  double decomp_factor = 0;
+  //forward loop
+  for (int i = 1; i<N; ++i){
+    decomp_factor = a[i-1]/b[i-1];  // precalculate to get 5N FLOPS
+    b[i] = b[i] - c[i-1]*decomp_factor;
+    b_twiddle[i] = b_twiddle[i] - b_twiddle[i-1]*decomp_factor;
+  }
+}
+\end{cpp}
+Followed by a function performing the backwards substitution:
+\begin{cpp}
+void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N)
+{
+  //setting first element
+  u[N-1] = b_twiddle[N-1]/b[N-1];
+
+  //backward loop
+  for (int i = N-1; i>=1;--i){
+    u[i-1] = (b_twiddle[i-1] - c[i-1]*u[i])/b[i-1];
+  }
+}
+\end{cpp}
+The vectors \verb+a+, \verb+b+ and \verb+c+ stores the lower, middle, and upper diagonals of the Toeplitz matrix respectivly. \verb+b_twiddle+ is the solution vector to the vector equation from which the algorithm is derived, \verb+u+ is the unknown vector we are solving for, and \verb+N+ is the dimention of the Toeplitz matrix. The forward substitiution, as first presented, requires \(6N\) floating point operations (FLOPS) to complete. In "general_forward", the factor \(a_{i-1}/b_{i-1}\) is precalculated, thus reducing the number of FLOPS to \(5N\). During forwar
 
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
@@ -467,7 +513,9 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 \bibliography{kilder}{}
 
 \appendix
-\section{Source code}
+\section{Source code} \label{A}
 All code for this report was written in C++ and Python 3.8, and the complete set of files can be found at \url{https://github.com/FunkMarvel/FYS3150_Project_1.git}
+
+\section{System specifications} \label{B}
 
 \end{document}
