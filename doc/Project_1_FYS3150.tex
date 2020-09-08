@@ -401,6 +401,10 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
+
+We ran the Thomas algorithm with $N=10$, $N=10^2$, and $N=10^3$ steps and created plots of the resulting data, and compared this with the analytic solution. These plots can be found in figures 1, 2 and 3.   
+
+
 \begin{figure}[H]
 	\centering
 	\label{fig:iv:a:1}
@@ -425,28 +429,42 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 	\(N=10^{3}\).}
 \end{figure}
 
-\subsection{Relative error for Thomas algorithms} \label{subsec:IV:B}
+
+As expected we see that for larger $N$ (shorter step length) the numerical approximation is closer to the analytic one, which also suggests that the algorithm is working as intended.  
+ 
+
+\subsection{Relative errors} \label{subsec:IV:B}
 \begin{table}[H]
 	\label{table:iv:b:1}
+	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\). To run the LU decomposition with $N \geq 10^5$ would have required more memory than we have available, and have thus not been performed.}	
+	
 	\begin{tabular}{|c|c|c|c|c|}
+	\hline
 		\(\log_{10}(h)\): & \(\epsilon\) General & \(\epsilon\) Special & \(\epsilon\) LU & \(N\) \\\hline
 		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(\num{1.05242e+00}\) & \(10^{1}\) \\
 		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(\num{1.00957e+00}\) & \(10^{2}\) \\
 		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(\num{3.47475e-03}\) & \(10^{3}\) \\
 		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(\num{3.47972e-04}\) & \(10^{4}\) \\
-		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & no data & \(10^{5}\) \\
-		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & no data & \(10^{6}\) \\
-		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & no data & \(10^{7}\) \\
-		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & no data & \(10^{8}\)
+		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & - & \(10^{5}\) \\
+		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & - & \(10^{6}\) \\
+		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & - & \(10^{7}\) \\
+		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & - & \(10^{8}\) \\\hline
 	\end{tabular}
-	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\).}
+	
 \end{table}
 
 \subsection{Benchmarks} \label{subsec:IV:C}
+
+We measured execution time for the three algorithms (for various amounts of steps), in order to compare the time spent by each to see if everything behaves as expected. The results are shown in table II. We expected that the the slowest of the three would be the LU decomposisition, as that is a method used to solve general matrix-vector equations. The general Thomas algorithm should be quicker, as that is dependent on the matrix being tridiagonal, and the special Thomas algorithm should be the fastest of the three, as it is reliant on the elements also having specific values. We can see from the execution times listed in table II that these expectations were correct. The LU decomposition is the slowest, the general Thomas algorithm is quicker, and the special Thomas algorithm is the quickest one, for all amounts of steps used. Note that for $N=10$ the execution time for the specialized and general algorithm is the same, which is also the same as the execution time for the specialized algorithm with $N=10^2$ steps. This probably has something to do with precision in the measurement of the execution time, since the time measured is such a small number.
+
+
 \begin{table}[H]
 	\centering
 	\label{table:iv:c:1}
+	\caption{Table of execution time in seconds for general and special Thomas algorithms, and LU decomposition.}
+		
 	\begin{tabular}{|c|c|c|}
+		\hline
 		Algorithm & Execution time \([s]\) & \(N\) \\\hline
 		General Thomas & \(\num{1e-06}\) & \(10^{1}\) \\
 		General Thomas & \(\num{3e-06}\) & \(10^{2}\) \\
@@ -459,9 +477,9 @@ This can be optimized somewhat, which will be discussed in section III. Further 
 		LU decomposition & \(\num{0.000309}\) & \(10^{1}\) \\
 		LU decomposition & \(\num{0.000755}\) & \(10^{2}\) \\
 		LU decomposition & \(\num{0.171256}\) & \(10^{3}\) \\
-		LU decomposition & \(\num{158.701}\) & \(10^{4}\)
+		LU decomposition & \(\num{158.701}\) & \(10^{4}\) \\\hline
 	\end{tabular}
-	\caption{Table of execution time in seconds for general and special Thomas algorithms, and LU decomposition.}
+	
 \end{table}
 
 \section{Conclusion} \label{sec:V}
