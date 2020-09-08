@@ -476,6 +476,21 @@ For the specialized algorithm, the reciprocals of the new diagonal elements are 
 \end{align*}
 and passed to "\verb+special_forward+" and "\verb+special_backward+", by reference, as the vector \verb+b_recip+. This precalculation takes \(2N\) FLOPS. The forward substitution takes \(2(N-1)\approx 2N\) FLOPS. The backwards substitution takes \(2(N-1)+1 = 2N\) FLOPS. As such, the specialized implementation takes a total of \(6N\) FLOPS. During forward substitution, vector \verb+b_twiddle+ is overwritten with the resulting \(\tilde{f}_{i}\) values. The total memory allocated by the specialized algorithm is \(3N\cdot \SI{64}{\bit}\)s.
 
+The LU decomposition was implemented using the Armadillo library's built in functions:
+\begin{cpp}
+  // LU decomposition with armadillo
+  lu(L,U,A);
+
+  // Solving resulting equation sets
+  vec y = solve(L,b_twiddle);
+  vec u = solve(U,y);
+\end{cpp}
+The matrices \verb+L+, \verb+U+, \verb+A+ store the lower triangular, upper triangular, and toeplitz matrix respectivly. The vector \verb+y+ contains the solution to
+\begin{align*}
+\textbf{Ly} = \tilde{\textbf{b}}
+\end{align*}
+
+
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
 
