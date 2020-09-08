@@ -141,7 +141,7 @@
     \bm{\hat{\mathbf{#1}}}%
    \fi
 }}
-\usepackage{siunitx}
+\usepackage[binary-units=true]{siunitx}
 
 \makeatletter
 \newcommand*{\balancecolsandclearpage}{%
@@ -441,7 +441,36 @@ void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N)
   }
 }
 \end{cpp}
-The vectors \verb+a+, \verb+b+ and \verb+c+ stores the lower, middle, and upper diagonals of the Toeplitz matrix respectivly. \verb+b_twiddle+ is the solution vector to the vector equation from which the algorithm is derived, \verb+u+ is the unknown vector we are solving for, and \verb+N+ is the dimention of the Toeplitz matrix. The forward substitiution, as first presented, requires \(6N\) floating point operations (FLOPS) to complete. In "general_forward", the factor \(a_{i-1}/b_{i-1}\) is precalculated, thus reducing the number of FLOPS to \(5N\). During forwar
+The vectors \verb+a+, \verb+b+ and \verb+c+ stores the lower, middle, and upper diagonals of the Toeplitz matrix respectivly. \verb+b_twiddle+ is the solution vector to the vector equation from which the algorithm is derived, \verb+u+ is the unknown vector we are solving for, and \verb+N+ is the dimention of the Toeplitz matrix. The forward substitiution, as first presented, requires \(6(N-1)\approx 6N\) floating point operations (FLOPS) to complete. In "\verb+general_forward+", the factor \(a_{i-1}/b_{i-1}\) is precalculated each iteration, thus reducing the number of FLOPS to \(5(N-1)\approx 5N\). The backward substitution requires \(3(N-1)+1 = 3N\) FLOPS to complete, thus the general algorithm requires \(8N\) FLOPS to complete fully. During forward substitution, the vector \verb+b+ is overwritten with the resulting \(\tilde{d}_{i}\) values, since there is no dependence on previous diagonal elements. Vector \verb+b_twiddle+ is similarly overwritten with the resulting \(\tilde{f}_{i}\) values. This, combined with passing the vectors by refrence, reduces the amount of allocated memory by \(2N\cdot \SI{64}{\bit}\)s for a total of \(5N\cdot \SI{64}{\bit}\)s of memory used by the general algorithm.
+
+The specialized Thomas algorithm is similarly implemented in two functions. The forward substitution:
+\begin{cpp}
+void special_forward(vec& b_recip, vec& b_twiddle, int N)
+{
+  //forward loop
+  for (int i = 1; i<N; ++i){
+    b_twiddle[i] = b_twiddle[i] + b_twiddle[i-1]*b_recip[i-1];
+  }
+}
+\end{cpp}
+The backwards substitution:
+\begin{cpp}
+void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N)
+{
+  //setting first element
+  u[N-1] = b_twiddle[N-1]/b_recip[N-1];
+
+  //backward loop
+  for (int i = N-1; i>=1; --i){
+    u[i-1] = (b_twiddle[i-1] + u[i])*b_recip[i-1];
+  }
+}
+\end{cpp}
+For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as
+\begin{align*}
+\frac{1}{d_{i-1}} = \frac{i}{i+1},
+\end{align*}
+and passed to "\verb+special_forward+" and "\verb+special_backward+", by reference, as the vector \verb+b_recip+. This precalculation takes \(2N\) FLOPS. The forward substitution takes \(2(N-1)\approx 2N\) FLOPS. The backwards substitution takes \(2(N-1)+1 = 2N\) FLOPS. As such, the specialized implementation takes a total of \(6N\) FLOPS. During forward substitution, vector \verb+b_twiddle+ is overwritten with the resulting \(\tilde{f}_{i}\) values. The total memory allocated by the specialized algorithm is \(3N\cdot \SI{64}{\bit}\)s.
 
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
