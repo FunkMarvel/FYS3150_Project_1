@@ -24,10 +24,15 @@ int main(int argc, char** argv)
   // Performing special algorithm with benchmark.
   special_main(N, h, u_anal, x);
 
+<<<<<<< HEAD
   /* Solving with LU decomposition with benchmark.
   ** This part is normally commented out, as it can easily overload a computer.
   */
    LU_main(N, h, u_anal, x);
+=======
+  // Solving with LU decomposition with benchmark.
+  LU_main(N, h, u_anal, x);
+>>>>>>> doodooFunk
 
   return 0;
 }
