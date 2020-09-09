@@ -529,6 +529,16 @@ As expected we see that for larger $N$ (shorter step length) the numerical appro
 
 
 \subsection{Relative errors} \label{subsec:IV:B}
+
+We measured the logarithm with base 10 of the maximum relative error for each algorithm for several $N$, and recorded the results in \hyperref[table:iv:b:1]{table I}. The variable $\epsilon$ in this table was calculated using the following formula:
+
+\begin{align*}
+\epsilon &= \max\bigg\{\log_{10} \bigg( \bigg| \frac{v_i-u_i}{u_i} \bigg| \bigg)\bigg\} \, ,
+\end{align*} 
+
+and as such it indicates the maximum relative error in a single run of an algorithm.
+
+
 \begin{table}[H]
 	\label{table:iv:b:1}
 	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\). To run the LU decomposition with $N \geq 10^5$ would have required more memory than we have available, and have thus not been performed.}
