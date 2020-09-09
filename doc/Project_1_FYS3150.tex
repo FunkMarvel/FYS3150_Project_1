@@ -171,7 +171,7 @@
 
 \section{Introduction} \label{sec:I}
 
-One of the most versatile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerical integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialized Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo library's solver. We measured the time spent by the various algorithms and their maximum relative error (to the analytic solution) in order to compare them quantitavely to see if they behave as expected. 
+One of the most versatile tools in modern science is numerical integration, thus it it simportant to understand its limits. In this paper we have performed numerical integration of a second order differential equation. This was done by discretizing the differential equation, and formulating it as a matrix-vector equation. The matrix-vector equation was then solved using both a general, and specialized Thomas algorithm, as well as LU-decomposition. Under the pretext of solving a \(1\)D version of Poisson's equation, we have created and tested a numerical solver using the Thomas algorithm. Furthermore, we have compared our results with LU decomposition using the Armadillo library's solver. We measured the time spent by the various algorithms and their maximum relative error (to the analytic solution) in order to compare them quantitavely to see if they behave as expected.
 
 
 
@@ -200,7 +200,7 @@ where $r = |\boldsymbol r|$. We can substitute $\boldsymbol \Phi (r) = \phi(r)/r
 This is a second order differential equation which can be written generally as:
 
 \begin{align*}
--u''(x) = f(x) \, , 
+-u''(x) = f(x) \, ,
 \end{align*}
 
 where we have changed $r \to x$, $\phi \to u$ and $4\pi r \rho \to f(x)$. In order to proceed we need to pick a specific sample problem to be used. We choose to solve this equation with Dirichlet boundary conditions, meaning that $x \in (0,1)$ and $u(0)=u(1)=0$. As for the source term $f$ we choose $f(x) = 100 e^{-10 x}$. This has the advantage of being possible to solve analytically:
@@ -230,7 +230,7 @@ All in all this gives us that:
 u(x) &= 1 - (1 - e^{-10}) x - e^{-10x}
 \end{align*}
 
-Now we have an analytical solution we can compare our numerical solutions to later. 
+Now we have an analytical solution we can compare our numerical solutions to later.
 
 In order to solve the problem numerically we first need some definitions in order. We discretize with the grid points given by $x_i = ih$, in the interval from $x_0 = 0$ to $x_{n+1} = 1$. The step length is then given by $h = 1/(n+1)$. We name the discretized approximation to the solution $v_i$. We can then approximate the second derivative of $u$ as:
 
@@ -268,7 +268,7 @@ This now clearly takes the shape of a matrix-vector problem. We define a vector 
 0 & -1 & 2 & -1 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & -1 & 2 & -1 \\
-0 & ... & ... & 0 & -1 & 2 
+0 & ... & ... & 0 & -1 & 2
 \end{bmatrix}
 \end{align*}
 
@@ -287,7 +287,7 @@ a_2 & b_2 & c_2 & 0 & ... & ... \\
 0 & a_3 & b_3 & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & a_{n} & b_n 
+0 & ... & ... & 0 & a_{n} & b_n
 \end{bmatrix}
 \end{align*}
 
@@ -308,7 +308,7 @@ b_1 & c_1 & 0 & ... & ... & 0 \\
 0 & a_3 & b_3 & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & a_{n} & b_n 
+0 & ... & ... & 0 & a_{n} & b_n
 \end{bmatrix}
 \end{align*}
 
@@ -321,7 +321,7 @@ We now define $\tilde{d}_2 = b_2 - \frac{a_2c_1}{b_1}$, and $\tilde{d}_1$ in ord
 0 & a_3 & b_3 & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & a_{n} & b_n 
+0 & ... & ... & 0 & a_{n} & b_n
 \end{bmatrix}
 \end{align*}
 
@@ -334,7 +334,7 @@ We can now similarly eliminate $a_3$ by multiplying row 2 with $\frac{a_3}{\tild
 0 & 0 & b_3 - \frac{a_3 c_2}{\tilde{d}_2} & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & a_{n-1} & b_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & a_{n} & b_n 
+0 & ... & ... & 0 & a_{n} & b_n
 \end{bmatrix}
 \end{align*}
 
@@ -353,7 +353,7 @@ with $\tilde{d}_1 = b_1$. This leaves us with a new matrix \textbf{A}:
 0 & 0 & \tilde{d}_3 & c_3 & 0 & ... \\
 ... & ... & ... & ... & ... & ... \\
 0 & ... & ... & 0 & \tilde{d}_{n-1} & c_{n-1} \\
-0 & ... & ... & 0 & 0 & \tilde{d}_n 
+0 & ... & ... & 0 & 0 & \tilde{d}_n
 \end{bmatrix}
 \end{align*}
 
@@ -470,10 +470,12 @@ void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N)
   }
 }
 \end{cpp}
-For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as\footnote{Note that the indexing here is one off from the formula derived in section II. This is because arrays in C++ start indexing at 0, so in order to match the code the indexing in the formula has been altered.}
+For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as:
+
 \begin{align*}
-\frac{1}{\tilde{d}_{i-1}} = \frac{i}{i+1},
+\frac{1}{\tilde{d}_{i}} = \frac{i}{i+1}\text{ for } i=1,2,3,...N,
 \end{align*}
+
 and passed to "\verb+special_forward+" and "\verb+special_backward+", by reference, as the vector \verb+b_recip+. This precalculation takes \(2N\) FLOPS. The forward substitution takes \(2(N-1)\approx 2N\) FLOPS. The backwards substitution takes \(2(N-1)+1 = 2N\) FLOPS. As such, the specialized implementation takes a total of \(6N\) FLOPS. During forward substitution, vector \verb+b_twiddle+ is overwritten with the resulting \(\tilde{f}_{i}\) values. The total memory allocated by the specialized algorithm is \(3N\cdot \SI{64}{\bit}\)s.
 
 The LU decomposition was implemented using the Armadillo library's built in functions:
@@ -495,7 +497,7 @@ The matrices \verb+L+, \verb+U+, \verb+A+ store the lower triangular, upper tria
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
 
-We ran the Thomas algorithm with $N=10$, $N=10^2$, and $N=10^3$ steps and created plots of the resulting data, and compared this with the analytic solution. These plots can be found in figures \hyperref[fig:iv:a:1]{1}, \hyperref[fig:iv:a:2]{2} and \hyperref[fig:iv:a:3]{3}.   
+We ran the Thomas algorithm with $N=10$, $N=10^2$, and $N=10^3$ steps and created plots of the resulting data, and compared this with the analytic solution. These plots can be found in figures \hyperref[fig:iv:a:1]{1}, \hyperref[fig:iv:a:2]{2} and \hyperref[fig:iv:a:3]{3}.
 
 
 \begin{figure}[H]
@@ -523,14 +525,14 @@ We ran the Thomas algorithm with $N=10$, $N=10^2$, and $N=10^3$ steps and create
 \end{figure}
 
 
-As expected we see that for larger $N$ (shorter step length) the numerical approximation is closer to the analytic one, which also suggests that the algorithm is working as intended.  
- 
+As expected we see that for larger $N$ (shorter step length) the numerical approximation is closer to the analytic one, which also suggests that the algorithm is working as intended.
+
 
 \subsection{Relative errors} \label{subsec:IV:B}
 \begin{table}[H]
 	\label{table:iv:b:1}
-	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\). To run the LU decomposition with $N \geq 10^5$ would have required more memory than we have available, and have thus not been performed.}	
-	
+	\caption{Table with \(\log_{10}\) of relative error for general and special Thomas algorithms, LU decomposition, and \(\log_{10}\) of step size \(h\). To run the LU decomposition with $N \geq 10^5$ would have required more memory than we have available, and have thus not been performed.}
+
 	\begin{tabular}{|c|c|c|c|c|}
 	\hline
 		\(\log_{10}(h)\): & \(\epsilon\) General & \(\epsilon\) Special & \(\epsilon\) LU & \(N\) \\\hline
@@ -543,7 +545,7 @@ As expected we see that for larger $N$ (shorter step length) the numerical appro
 		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & - & \(10^{7}\) \\
 		\(\num{-8.000000e+00}\) & \(\num{-1.140500e-03}\) & \(\num{3.765295e-08}\) & - & \(10^{8}\) \\\hline
 	\end{tabular}
-	
+
 \end{table}
 
 \subsection{Benchmarks} \label{subsec:IV:C}
@@ -555,7 +557,7 @@ We measured execution time for the three algorithms (for various amounts of step
 	\centering
 	\label{table:iv:c:1}
 	\caption{Table of execution time in seconds for general and special Thomas algorithms, and LU decomposition.}
-		
+
 	\begin{tabular}{|c|c|c|}
 		\hline
 		Algorithm & Execution time \([s]\) & \(N\) \\\hline
@@ -572,7 +574,7 @@ We measured execution time for the three algorithms (for various amounts of step
 		LU decomposition & \(\num{0.171256}\) & \(10^{3}\) \\
 		LU decomposition & \(\num{158.701}\) & \(10^{4}\) \\\hline
 	\end{tabular}
-	
+
 \end{table}
 
 \section{Conclusion} \label{sec:V}
