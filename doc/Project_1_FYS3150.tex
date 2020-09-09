@@ -472,7 +472,7 @@ void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N)
 \end{cpp}
 For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as
 \begin{align*}
-\frac{1}{d_{i-1}} = \frac{i}{i+1},
+\frac{1}{\tilde{d}_{i}} = \frac{i}{i+1}\text{ for } i=1,2,3,...N,
 \end{align*}
 and passed to "\verb+special_forward+" and "\verb+special_backward+", by reference, as the vector \verb+b_recip+. This precalculation takes \(2N\) FLOPS. The forward substitution takes \(2(N-1)\approx 2N\) FLOPS. The backwards substitution takes \(2(N-1)+1 = 2N\) FLOPS. As such, the specialized implementation takes a total of \(6N\) FLOPS. During forward substitution, vector \verb+b_twiddle+ is overwritten with the resulting \(\tilde{f}_{i}\) values. The total memory allocated by the specialized algorithm is \(3N\cdot \SI{64}{\bit}\)s.
 
