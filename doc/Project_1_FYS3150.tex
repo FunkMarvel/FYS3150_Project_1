@@ -1,4 +1,4 @@
-\documentclass[english,notitlepage,reprint]{revtex4-1}  % defines the basic parameters of the document
+\documentclass[english,notitlepage,reprint,nofootinbib]{revtex4-1}  % defines the basic parameters of the document
 
 % if you want a single-column, remove reprint
 
@@ -445,7 +445,7 @@ void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N)
 \end{cpp}
 The vectors \verb+a+, \verb+b+ and \verb+c+ stores the lower, middle, and upper diagonals of the Toeplitz matrix respectivly. \verb+b_twiddle+ is the solution vector to the vector equation from which the algorithm is derived, \verb+u+ is the unknown vector we are solving for, and \verb+N+ is the dimention of the Toeplitz matrix. The forward substitiution, as first presented, requires \(6(N-1)\approx 6N\) floating point operations (FLOPS) to complete. In "\verb+general_forward+", the factor \(a_{i-1}/b_{i-1}\) is precalculated each iteration, thus reducing the number of FLOPS to \(5(N-1)\approx 5N\). The backward substitution requires \(3(N-1)+1 = 3N\) FLOPS to complete, thus the general algorithm requires \(8N\) FLOPS to complete fully.
 
-During forward substitution, the vector \verb+b+ is overwritten with the resulting \(\tilde{d}_{i}\) values, since there is no dependence on previous diagonal elements. Vector \verb+b_twiddle+ is similarly overwritten with the resulting \(\tilde{f}_{i}\) values. This, combined with passing the vectors by refrence, reduces the amount of allocated memory by \(2N\cdot \SI{64}{\bit}\)s for a total of \(5N\cdot \SI{64}{\bit}\)s of memory used by the general algorithm.
+During forward substitution, the vector \verb+b+ is overwritten with the resulting \(\tilde{d}_{i}\) values, since there is no dependence on previous diagonal elements. Vector \verb+b_twiddle+ is similarly overwritten with the resulting \(\tilde{f}_{i}\) values. This, combined with passing the vectors by reference, reduces the amount of allocated memory by \(2N\cdot \SI{64}{\bit}\)s for a total of \(5N\cdot \SI{64}{\bit}\)s of memory used by the general algorithm.
 
 The specialized Thomas algorithm is similarly implemented in two functions. The forward substitution:
 \begin{cpp}
@@ -470,9 +470,9 @@ void special_backward(vec& b_recip, vec& b_twiddle, vec& u, int N)
   }
 }
 \end{cpp}
-For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as
+For the specialized algorithm, the reciprocals of the new diagonal elements are precalculated as\footnote{Note that the indexing here is one off from the formula derived in section II. This is because arrays in C++ start indexing at 0, so in order to match the code the indexing in the formula has been altered.}
 \begin{align*}
-\frac{1}{d_{i-1}} = \frac{i}{i+1},
+\frac{1}{\tilde{d}_{i-1}} = \frac{i}{i+1},
 \end{align*}
 and passed to "\verb+special_forward+" and "\verb+special_backward+", by reference, as the vector \verb+b_recip+. This precalculation takes \(2N\) FLOPS. The forward substitution takes \(2(N-1)\approx 2N\) FLOPS. The backwards substitution takes \(2(N-1)+1 = 2N\) FLOPS. As such, the specialized implementation takes a total of \(6N\) FLOPS. During forward substitution, vector \verb+b_twiddle+ is overwritten with the resulting \(\tilde{f}_{i}\) values. The total memory allocated by the specialized algorithm is \(3N\cdot \SI{64}{\bit}\)s.
 
@@ -490,6 +490,7 @@ The matrices \verb+L+, \verb+U+, \verb+A+ store the lower triangular, upper tria
 \textbf{Ly} = \tilde{\textbf{b}}
 \end{align*}
 
+\newpage
 
 \section{Analysis} \label{sec:IV}
 \subsection{Plots of the general Thomas algorithm} \label{subsec:IV:A}
@@ -547,7 +548,7 @@ As expected we see that for larger $N$ (shorter step length) the numerical appro
 
 \subsection{Benchmarks} \label{subsec:IV:C}
 
-We measured execution time for the three algorithms (for various amounts of steps), in order to compare the time spent by each to see if everything behaves as expected. The results are shown in \hyperref[table:iv:c:1]{table II}. We expected that the the slowest of the three would be the LU decomposisition, as that is a method used to solve general matrix-vector equations. The general Thomas algorithm should be quicker, as that is dependent on the matrix being tridiagonal, and the special Thomas algorithm should be the fastest of the three, as it is reliant on the elements also having specific values. We can see from the execution times listed in \hyperref[table:iv:c:1]{table II} that these expectations were correct. The LU decomposition is the slowest, the general Thomas algorithm is quicker, and the special Thomas algorithm is the quickest one, for all amounts of steps used. Note that for $N=10$ the execution time for the specialized and general algorithm is the same, which is also the same as the execution time for the specialized algorithm with $N=10^2$ steps. This probably has something to do with precision in the measurement of the execution time, since the time measured is such a small number.
+We measured execution time for the three algorithms (for various amounts of steps), in order to compare the time spent by each to see if everything behaves as expected. The results are shown in \hyperref[table:iv:c:1]{table II}. We expected that the the slowest of the three would be the LU decomposisition, as that is a method used to solve general matrix-vector equations. The general Thomas algorithm should be quicker, as that is dependent on the matrix being tridiagonal, and the special Thomas algorithm should be the fastest of the three, as it is reliant on the elements also having specific values. We can see from the execution times listed in \hyperref[table:iv:c:1]{table II} that these expectations were met. The LU decomposition is the slowest, the general Thomas algorithm is quicker, and the special Thomas algorithm is the quickest one, for all amounts of steps used. Note that for $N=10$ the execution time for the specialized and general algorithm is the same, which is also the same as the execution time for the specialized algorithm with $N=10^2$ steps. This probably has something to do with precision in the measurement of the execution time, and seems to suggest that $1 \times 10^{-6}\, s$ is the shortest time interval we can measure, as the special algorithm should be faster with $N=10$ steps than with $N=10^2$ steps (for obvious reasons).
 
 
 \begin{table}[H]
