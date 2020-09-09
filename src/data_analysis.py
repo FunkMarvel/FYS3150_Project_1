@@ -86,7 +86,7 @@ def error_analysis():
     """
     Function for calculating relative error and saving table to file.
     """
-    error = np.empty((3, len(N)))  # array for errors.
+    error = np.empty((2, len(N)))  # array for errors.
     log10_of_h = np.log10(1/(N+1))  # array for log of stepsize
 
     for j in range(len(N)):  # calculating errors.

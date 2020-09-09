@@ -27,7 +27,7 @@ int main(int argc, char** argv)
   /* Solving with LU decomposition with benchmark.
   ** This part is normally commented out, as it can easily overload a computer.
   */
-   LU_main(N, h, u_anal, x);
+  // LU_main(N, h, u_anal, x);
 
   return 0;
 }
