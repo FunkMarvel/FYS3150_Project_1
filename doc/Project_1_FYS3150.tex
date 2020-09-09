@@ -166,8 +166,15 @@
 %\date{\today}
 \noaffiliation                            % ignore this
 
+\begin{abstract}
+We solved a simplified version of Poisson's equation numerically using three different algorithms based on linear algebra methods. We used a general Thomas algorithm, a specialized version of said algorithm for our problem, and LU decomposition and compared these three with execution times and relative error between the solutions they gave and an analytic one. The general Thomas algorithm uses approximately $8N$ FLOPs, the special Thomas algorithm uses approximately $6N$ FLOPs, and the LU decomposition uses something of the order $\frac{2}{3}N^3$ FLOPs, where $N$ is the amount of steps. The measured execution times fits with these results. The calculated maximum relative error for the general Thomas algorithm is the same as that from the LU decomposition, and it is slightly larger for the special Thomas algorithm. Where as much precision as possible is needed this indicates that the general Thomas algorithm is the better choice of the three, but if less precision is needed and speed is prioritized the special algorithm is the best choice of the three. 
+\end{abstract}
 \maketitle
+
+
+
 \tableofcontents
+
 
 \section{Introduction} \label{sec:I}
 
