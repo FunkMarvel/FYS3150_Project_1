@@ -25,7 +25,7 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
   start = clock();
 
   // Calculating 1/b where b is the diagonal elements.
-  for (int i = 1; i < N+1; ++i) {
+  for (int i = 1; i <= N; ++i) {
     b_recip[i-1] = i/(i + 1.0);
   }
 
