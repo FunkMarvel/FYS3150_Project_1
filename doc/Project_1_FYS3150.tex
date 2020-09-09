@@ -27,6 +27,10 @@
 \usepackage{float}
 \usepackage{balance}
 
+\makeatletter
+\newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+\makeatother
+
 % defines the color of hyperref objects
 % Blending two colors:  blue!80!black  =  80% blue and 20% black
 \hypersetup{ % this is just my personal choice, feel free to change things
@@ -41,7 +45,7 @@
 	\lstset{ %
 		inputpath=,
 		backgroundcolor=\color{white!88!black},
-		basicstyle={\ttfamily\tiny},
+		basicstyle={\ttfamily\notsotiny},
 		commentstyle=\color{magenta},
 		language=Python,
 		morekeywords={True,False},
@@ -58,7 +62,7 @@
 	\lstset{ %
 		inputpath=,
 		backgroundcolor=\color{white!88!black},
-		basicstyle={\ttfamily\tiny },
+		basicstyle={\ttfamily\notsotiny},
 		commentstyle=\color{magenta},
 		language=C++,
 		morekeywords={True,False},
