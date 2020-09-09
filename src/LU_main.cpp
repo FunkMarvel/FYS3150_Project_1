@@ -60,4 +60,5 @@ void LU_main(int N, double h, vec& u_anal, vec& x)
        << " steps: " << eps_LU << endl;
 
   u.save("u_LUdecomp" + std::to_string(N) + ".bin", raw_binary);
+  // u.save("u_LUdecomp" + std::to_string(N) + ".txt", arma_ascii);
 }

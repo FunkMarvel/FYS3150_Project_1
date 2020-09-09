@@ -19,6 +19,7 @@
 \usepackage{lipsum}
 \usepackage[ddmmyyyy]{datetime}
 \usepackage{lmodern}
+\usepackage{cprotect}
 
 % (2) specify encoding
 \usepackage[T1]{fontenc}
@@ -625,8 +626,46 @@ The errors also behaved largely as expected with them getting smaller for larger
 \bibliography{kilder}{}
 
 \appendix
-\section{Source code} \label{A}
-All code for this report was written in C++ and Python 3.8, and the complete set of files can be found at \url{https://github.com/FunkMarvel/FYS3150_Project_1.git}
+\section{Project files} \label{A}
+All code for this report was written in C++ and Python 3.8, and the complete set of files can be found at \url{https://github.com/FunkMarvel/FYS3150_Project_1.git} in the \verb+src+ directory.
+
+\subsection{Source code} \label{A.1}
+Here is a list of source code files used for this report.
+
+\cprotect\subsubsection{\verb+data_analysis.py+} \label{A.1.a}
+Main script for running project, plotting and data analysis.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/data_analysis.py}
+
+\cprotect\subsubsection{\verb+main.cpp+} \label{A.1.b}
+Main cpp file for running algorithms.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/main.cpp}
+
+\cprotect\subsubsection{\verb+general_main.cpp+} \label{A.1.c}
+File for setting up and benchmarking general Thomas algorithm.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/general_main.cpp}
+
+\cprotect\subsubsection{\verb+general_algorithm.cpp+} \label{A.1.d}
+File containing the implementation of the general Thomas algorithm.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/general_algorithm.cpp}
+
+\cprotect\subsubsection{\verb+special_main.cpp+} \label{A.1.e}
+File for setting up and benchmarking specialized Thomas algorithm.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/special_main.cpp}
+
+\cprotect\subsubsection{\verb+special_algorithm.cpp+} \label{A.1.f}
+File containing the implementation of the specialized Thomas algorithm.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/special_algorithm.cpp}
+
+\cprotect\subsubsection{\verb+LU_main.cpp+} \label{A.1.g}
+File for setting up and benchmarking LU decomposition.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/LU_main.cpp}
+
+\cprotect\subsubsection{\verb+relative_error.cpp+} \label{A.1.h}
+C++ function calculating relative error.
+\url{https://github.com/FunkMarvel/FYS3150_Project_1/blob/master/src/relative_error.cpp}
+
+\subsection{Selected results} \label{A.2}
+Here is a folder of selected results from running our code. The run used to generate this data is copied from terminal in this directory's readme-file.
 
 \section{System specifications} \label{B}
 All results included in this report were achieved by running the implementation on the following system:

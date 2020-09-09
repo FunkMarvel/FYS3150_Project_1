@@ -17,6 +17,7 @@ int main(int argc, char** argv)
   }
   x.save("x" + std::to_string(N) + ".bin", raw_binary);
   u_anal.save("u_anal" + std::to_string(N) + ".bin", raw_binary);
+  // u_anal.save("u_anal" + std::to_string(N) + ".txt", arma_ascii);
 
   // Performing general algorithm with benchmark.
   general_main(N, h, u_anal, x);
@@ -27,7 +28,7 @@ int main(int argc, char** argv)
   /* Solving with LU decomposition with benchmark.
   ** This part is normally commented out, as it can easily overload a computer.
   */
-  // LU_main(N, h, u_anal, x);
+  LU_main(N, h, u_anal, x);
 
   return 0;
 }

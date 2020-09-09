@@ -50,4 +50,5 @@ void special_main(int N, double h, vec& u_anal, vec& x) {
        << " steps: " << eps_special << endl;
 
   u.save("u_special" + std::to_string(N) + ".bin", raw_binary);
+  // u.save("u_special" + std::to_string(N) + ".txt", arma_ascii);
 }
