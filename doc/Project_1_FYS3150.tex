@@ -493,7 +493,9 @@ The matrices \verb+L+, \verb+U+, \verb+A+ store the lower triangular, upper tria
 \end{align*}
 and the vector \verb+u+ contains the unknown values once the LU decomposition is complete. The computational cost of LU decomposition is on the order of \(\frac{2}{3}N^{3}\) FLOPs \citep{Hjorth-Jensen2018}. The LU decomposition requires the allocation of three \(N\times N\) matrices, and thus the memory needed for the matrices alone is \(3N^{2} \cdot \SI{64}{\bit}\)s.
 
-Our implementation runs all the solvers sequentally. Each solver only allocates the memory it needs to perform its algorithm, and writes the results to binary files, before deallocating memory. The entire C++ program  runs the three solvers for one value of \(N\). The Python-script "\verb+data_analysis.py+" builds (if necessary) and runs the C++ program for given values of \(N\). The Python-script reads in the data from the binary files, and takes care of plotting and error analysis. For a more detailed explanation, and complete set of source code, see the repository linked in \hyperref[A]{appendix A}. For the specifications of the benchmark system, see \hyperref[B]{appendix B}.
+Our implementation runs all the solvers sequentally. Each solver only allocates the memory it needs to perform its algorithm, and writes the results to binary files, before deallocating memory. Each solver performs an internal benchmark of its algorithm. The benchmark of the specialized Thomas algorithm includes time spent precalculating the \(1/\tilde{d}_{i}\) values.
+
+The entire C++ program  runs the three solvers for one value of \(N\). The Python-script "\verb+data_analysis.py+" builds (if necessary) and runs the C++ program for given values of \(N\). The Python-script then reads in the data from the binary files, and takes care of plotting and error analysis. For a more detailed explanation, and complete set of source code, see the repository linked in \hyperref[A]{appendix A}. For the specifications of the benchmark system, see \hyperref[B]{appendix B}.
 
 \newpage
 
