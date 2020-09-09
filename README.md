@@ -5,8 +5,10 @@ To test run the project try
 ```console
 $ python3 data_analysis.py plot
 ```
+in the src directory.
+
 ## Usage:
-The python 3 script "data_analysis.py" builds and runs the cpp implementations of the Thomas' algorithm, and LU-decomposition. The script takes in 3 optional command line arguments (see below). The command line arguments can be mixed and matched in any order:
+The python 3 script "data_analysis.py" builds and runs the cpp implementations of the Thomas' algorithm, and LU-decomposition. The script takes in 3 optional command line arguments (see below). Remember to run the script from inside the src directory. The command line arguments can be mixed and matched in any order:
 ```console
 $ python3 data_analysis.py 4 plot error
 ```
