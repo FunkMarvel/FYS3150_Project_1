@@ -58,7 +58,7 @@
 	\lstset{ %
 		inputpath=,
 		backgroundcolor=\color{white!88!black},
-		basicstyle={\ttfamily\tiny},
+		basicstyle={\ttfamily\tiny },
 		commentstyle=\color{magenta},
 		language=C++,
 		morekeywords={True,False},
@@ -306,7 +306,7 @@ In general this gives us equations on the form:
 a_i v_{i-1} + b_i v_i + c_i v_{i+1} &= \tilde{b}_i \, ,
 \end{align*}
 
-which we need to solve. As there is not element $c_n$ or $a_1$, we simply define them to be 0 instead, and thus the equation is valid from $i = 1,...,n$. Looking at the tridiagonal matrix \textbf{A} with general elements again, we can see that we can eliminate the band below the diagonal (the components of \textbf{a}). First we take the first row multiplied by $a_2/b_1$ and subtract it from row 2. This leaves us with the following matrix:
+which we need to solve. As there is no element $c_n$ or $a_1$, we simply define them to be 0 instead, and thus the equation is valid from $i = 1,...,n$. Looking at the tridiagonal matrix \textbf{A} with general elements again, we can see that we can eliminate the band below the diagonal (the components of \textbf{a}). First we take the first row multiplied by $a_2/b_1$ and subtract it from row 2. This leaves us with the following matrix:
 
 \begin{align*}
 \textbf{A} &= \begin{bmatrix}
@@ -319,7 +319,7 @@ b_1 & c_1 & 0 & ... & ... & 0 \\
 \end{bmatrix}
 \end{align*}
 
-We now define $\tilde{d}_2 = b_2 - \frac{a_2c_1}{b_1}$, and $\tilde{d}_1$ in order to simplify further equations:
+We now define $\tilde{d}_2 = b_2 - \frac{a_2c_1}{b_1}$, and $\tilde{d}_1 = b_1$ in order to simplify further equations:
 
 \begin{align*}
 \textbf{A} &= \begin{bmatrix}
@@ -384,14 +384,14 @@ We note that $c_n = 0$, which means that when $i=n$, we have that:
 v_n &= \frac{\tilde{f}_n}{\tilde{d}_n}
 \end{align*}
 
-Now that we know one value \textbf{v}, this will now uniquely determine the other elements. We can see this by rewriting:
+Now that we know one value in \textbf{v}, this will now uniquely determine the other elements. We can see this by rewriting:
 
 \begin{align*}
 \tilde{d}_i v_i  + c_i v_{i+1} &= \tilde{f}_i \\
 v_i &= \frac{\tilde{f}_i - c_i v_{i+1}}{\tilde{d}_i}
 \end{align*}
 
-As long as we know the last element in \textbf{v} (which we do at this point) this relation allows us to find $v_i$ for $i = n-1,...,1$. As we run through the elements from the largest $i$ to the smallest we call this part the backwards substitution part. For similar reasons we call calculating the $\tilde{d}_i$ and $\tilde{f}_i$ the forwards substitution part. This algorithm is called the Thomas algorithm \citep{Thomas1949} and is used for solving a general tridiagonal matrix. In our case however, we know what the elements of \textbf{A} are, allowing us to form a special algorithm. First we look at the $\tilde{d}_i$:
+As long as we know the last element in \textbf{v} (which we do at this point) this relation allows us to find $v_i$ for $i = n-1,...,1$. As we run through the elements from the largest $i$ to the smallest we call this part the backwards substitution part. For similar reasons we call calculating the $\tilde{d}_i$ and $\tilde{f}_i$ the forwards substitution part. This algorithm is called the Thomas algorithm \citep{Thomas1949} and is used for solving a matrix-vector equation with a general tridiagonal matrix. In our case however, we know what the elements of \textbf{A} are, allowing us to form a specialized algorithm. First we look at the $\tilde{d}_i$:
 
 \begin{align*}
 \tilde{d}_i &= b_i - \frac{a_i c_{i-1}}{\tilde{d}_{i-1}}
@@ -452,7 +452,7 @@ void general_backward(vec& b, vec& b_twiddle, vec& c, vec& u, int N)
 \end{cpp}
 The vectors \verb+a+, \verb+b+ and \verb+c+ store the lower, middle, and upper diagonals of the Toeplitz matrix respectivly. \verb+b_twiddle+ is the solution vector to the vector equation from which the algorithm is derived, \verb+u+ is the unknown vector we are solving for, and \verb+N+ is the dimension of the Toeplitz matrix. The forward substitiution, as first presented, requires \(6(N-1)\approx 6N\) floating point operations (FLOPs) to complete. In "\verb+general_forward+", the factor \(a_{i-1}/b_{i-1}\) is precalculated each iteration, thus reducing the number of FLOPs to \(5(N-1)\approx 5N\). The backward substitution requires \(3(N-1)+1 = 3N\) FLOPs to complete, thus the general algorithm requires \(8N\) FLOPs to complete fully.
 
-During forward substitution, the vector \verb+b+ is overwritten with the resulting \(\tilde{d}_{i}\) values, since there is no dependence on previous diagonal elements. Vector \verb+b_twiddle+ is similarly overwritten with the resulting \(\tilde{f}_{i}\) values. This, combined with passing the vectors by reference, reduces the amount of allocated memory by \(2N\cdot \SI{64}{\bit}\)s for a total of \(5N\cdot \SI{64}{\bit}\)s of memory used by the general algorithm.
+During forward substitution, the vector \verb+b+ is overwritten with the resulting \(\tilde{d}_{i}\) values, since there is no dependency on previous diagonal elements. Vector \verb+b_twiddle+ is similarly overwritten with the resulting \(\tilde{f}_{i}\) values. This, combined with passing the vectors by reference, reduces the amount of allocated memory by \(2N\cdot \SI{64}{\bit}\)s for a total of \(5N\cdot \SI{64}{\bit}\)s of memory used by the general algorithm.
 
 The specialized Thomas algorithm is similarly implemented in two functions. The forward substitution:
 \begin{cpp}
@@ -550,7 +550,7 @@ We measured the logarithm with base 10 of the maximum relative error for each al
 
 and as such it represents the maximum relative error in a single run of an algorithm. 
 
-We see in general that the error decreases for larger $N$ with all algorithms. Notably, we have that the maximum relative error using LU decomposition is the same as the error using the general Thomas algorithm. Most likely there is some kind of optimization at work in the Armadillo package behind the scenes that causes it to work similarly to the general Thomas algorithm. We can also see that the special Thomas algorithm in general has a larger error than the other two algorithms, albeit not by much. The steady decrease in error indicates that we have not encountered machine precision as an issue with $N \leq 10^8$. However, for \(N=10^{6}\) and \(N=10^{7}\) in \hyperref[table:iv:b:1]{table I.} the \(\epsilon\) of the general algorithm did not decrease by one order of magnitude. Instead it remains at an order of \(10^{-6}\). For \(N=10^{8}\), the \(\epsilon\) switches sign, as the relative error becomes less than \(1\). This apparent stagnation, followed by a sharp decrease in error, could indicate instability caused by loss of numerical precision. However, it could also be a property of the general algorithm. Verifying if the relative error has become unstable, would require running the general Thomas algorithm for even larger \(N\). This is something we do not have the memory for, and it is therefore left as an exercise for future research.
+We see in general that the error decreases for larger $N$ with all algorithms. Notably, we have that the maximum relative error using LU decomposition is the same as the error using the general Thomas algorithm. Most likely there is some kind of optimization at work in the Armadillo package behind the scenes that causes it to work similarly to the general Thomas algorithm. We can also see that the special Thomas algorithm in general has a larger error than the other two algorithms, albeit not by much. The steady decrease in error indicates that we have not encountered machine precision as an issue with $N \leq 10^8$. However, for \(N=10^{6}\) and \(N=10^{7}\) in \hyperref[table:iv:b:1]{table I.} the \(\epsilon\) of the general algorithm did not decrease by one order of magnitude. Instead it remains at an order of \(10^{-6}\). For \(N=10^{8}\), the \(\epsilon\) switches sign, as the relative error becomes less than \(1\). This apparent stagnation, followed by a sharp decrease in error, could indicate instability caused by loss of numerical precision. However, it could also be a property of the general algorithm. Verifying if the relative error has become unstable would require running the general Thomas algorithm for even larger \(N\). This is something we do not have the memory for, and it is therefore left as an exercise for future research.
 
 
 \begin{table}[H]
