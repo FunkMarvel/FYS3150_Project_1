@@ -536,7 +536,9 @@ We measured the logarithm with base 10 of the maximum relative error for each al
 \epsilon &= \max\bigg\{\log_{10} \bigg( \bigg| \frac{v_i-u_i}{u_i} \bigg| \bigg)\bigg\} \, ,
 \end{align*} 
 
-and as such it indicates the maximum relative error in a single run of an algorithm.
+and as such it represents the maximum relative error in a single run of an algorithm. 
+
+We see in general that the error decreases for larger $N$ with all algorithms. This indicates that we have not encountered machine precision as an issue with $N \leq 10^8$. Notably, we have that the maximum relative error using LU decomposition is the same as the error using the general Thomas algorithm. Most likely there is some kind of optimization at work in the Armadillo package behind the scenes that causes it to work similarly to the general Thomas algorithm. We can also see that the special Thomas algorithm in general has a larger error than the other two algorithms, albeit not by much. 
 
 
 \begin{table}[H]
@@ -546,10 +548,10 @@ and as such it indicates the maximum relative error in a single run of an algori
 	\begin{tabular}{|c|c|c|c|c|}
 	\hline
 		\(\log_{10}(h)\): & \(\epsilon\) General & \(\epsilon\) Special & \(\epsilon\) LU & \(N\) \\\hline
-		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(\num{1.05242e+00}\) & \(10^{1}\) \\
-		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(\num{1.00957e+00}\) & \(10^{2}\) \\
-		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(\num{3.47475e-03}\) & \(10^{3}\) \\
-		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(\num{3.47972e-04}\) & \(10^{4}\) \\
+		\(\num{-1.041393e+00}\) & \(\num{3.026200e-01}\) & \(\num{3.601314e-01}\) & \(\num{3.026200e-01}\) & \(10^{1}\) \\
+		\(\num{-2.004321e+00}\) & \(\num{3.426303e-02}\) & \(\num{4.249885e-02}\) & \(\num{3.426303e-02}\) & \(10^{2}\) \\
+		\(\num{-3.000434e+00}\) & \(\num{3.474750e-03}\) & \(\num{4.338587e-03}\) & \(\num{3.474750e-03}\) & \(10^{3}\) \\
+		\(\num{-4.000043e+00}\) & \(\num{3.479720e-04}\) & \(\num{4.347831e-04}\) & \(\num{3.479720e-04}\) & \(10^{4}\) \\
 		\(\num{-5.000004e+00}\) & \(\num{3.480179e-05}\) & \(\num{4.348760e-05}\) & - & \(10^{5}\) \\
 		\(\num{-6.000000e+00}\) & \(\num{4.210129e-06}\) & \(\num{4.348746e-06}\) & - & \(10^{6}\) \\
 		\(\num{-7.000000e+00}\) & \(\num{1.005169e-06}\) & \(\num{4.343971e-07}\) & - & \(10^{7}\) \\
